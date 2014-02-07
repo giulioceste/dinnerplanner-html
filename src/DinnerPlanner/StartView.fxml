@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.collections.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -10,47 +11,59 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.web.*?>
 
-<SplitPane dividerPositions="0.014563106796116505" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
-  <items>
-    <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" rotateGraphic="false" tabClosingPolicy="UNAVAILABLE">
-      <tabs>
-        <Tab fx:id="starterTab" content="$null" text="Start" />
-        <Tab fx:id="mainTab" content="$null" text="Main" />
-        <Tab fx:id="dessertTab" content="$null" text="Dessert" />
-      </tabs>
-    </TabPane>
-    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
-      <children>
-        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+<fx:root type="javafx.scene.layout.BorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <center>
+    <SplitPane dividerPositions="0.5" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+      <items>
+        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" rotateGraphic="false" tabClosingPolicy="UNAVAILABLE">
+          <tabs>
+            <Tab fx:id="starterTab" content="$null" text="Start" />
+            <Tab fx:id="mainTab" content="$null" text="Main" />
+            <Tab fx:id="dessertTab" content="$null" text="Dessert" />
+          </tabs>
+        </TabPane>
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
           <children>
-            <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Number of People" HBox.hgrow="SOMETIMES" />
-            <TextField fx:id="numPeopleInputField" maxHeight="1.7976931348623157E308" onAction="#onNumPeopleChanged" prefColumnCount="4" prefWidth="-1.0" HBox.hgrow="NEVER" />
-            <VBox prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER">
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
               <children>
-                <Button fx:id="incPeopleButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onIncrementPeopleClicked" text="+" />
-                <Button fx:id="decrPeopleButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDecrementPeopleClicked" prefWidth="29.0" text="-" />
+                <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Number of People" HBox.hgrow="SOMETIMES" />
+                <TextField fx:id="numPeopleInputField" maxHeight="1.7976931348623157E308" onAction="#onNumPeopleChanged" prefColumnCount="4" prefWidth="-1.0" HBox.hgrow="NEVER" />
+                <VBox prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER">
+                  <children>
+                    <Button fx:id="incPeopleButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onIncrementPeopleClicked" text="+" />
+                    <Button fx:id="decrPeopleButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDecrementPeopleClicked" prefWidth="29.0" text="-" />
+                  </children>
+                </VBox>
               </children>
-            </VBox>
+            </HBox>
+            <Label fx:id="totalCostLabel" text="">
+              <graphic>
+                <Label id="totalCostLabel" text="Total Cost" />
+              </graphic>
+            </Label>
+            <Label styleClass="pıppo-label" text="Dinner Menu">
+              <stylesheets>
+                <URL value="@Start.css" />
+              </stylesheets>
+            </Label>
+            <Pane fx:id="dishPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+              <children>
+                <Label fx:id="dragDishLabel" text="Drag your dish to the menu" />
+              </children>
+            </Pane>
+            <HBox maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+              <children>
+                <Button fx:id="prepButton" mnemonicParsing="false" onAction="#onPreparationClicked" text="Preparation" />
+                <Button id="ingrButton" fx:id="ingButton" mnemonicParsing="false" onAction="#onIngredientsClicked" text="Ingredients" />
+              </children>
+            </HBox>
           </children>
-        </HBox>
-        <Label fx:id="totalCostLabel" text="">
-          <graphic>
-            <Label id="totalCostLabel" text="Total Cost" />
-          </graphic>
-        </Label>
-        <Label text="Dinner Menu" />
-        <Pane fx:id="dishPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-          <children>
-            <Label fx:id="dragDishLabel" text="Drag your dish to the menu" />
-          </children>
-        </Pane>
-        <HBox maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
-          <children>
-            <Button fx:id="prepButton" mnemonicParsing="false" onAction="#onPreparationClicked" text="Preparation" />
-            <Button id="ingrButton" fx:id="ingButton" mnemonicParsing="false" onAction="#onIngredientsClicked" text="Ingredients" />
-          </children>
-        </HBox>
-      </children>
-    </VBox>
-  </items>
-</SplitPane>
+        </VBox>
+      </items>
+      <stylesheets>
+        <URL value="@Base.css" />
+        <URL value="@Start.css" />
+      </stylesheets>
+    </SplitPane>
+  </center>
+</fx:root>
