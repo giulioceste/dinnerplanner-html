@@ -1,0 +1,9 @@
+.label {
+    -fx-font: 16px "Serif";
+    -fx-padding: 10;
+    -fx-background-color: #CCFF99;
+}
+
+.pippo-label {
+    -fx-background-color: #FFCC99;
+}
