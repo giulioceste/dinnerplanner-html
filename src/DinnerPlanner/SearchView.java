@@ -17,5 +17,4 @@ public class SearchView extends BorderPane {
             throw new RuntimeException("Unable to load SearchView due to " + e.getMessage());
         }
     }
-
 }
