@@ -7,18 +7,15 @@ import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import java.io.IOException;
 
 /**
- * Created by halitanil on 07.02.2014.
+ * Created by Giulio on 08/02/14.
  */
-public class MainView extends BorderPane {
+public class FullMenuView extends BorderPane {
 
-    public MainView(DinnerModel model, MainController controller) {
+    public FullMenuView(DinnerModel model) {
         try {
-            ViewLoader.load(this, "MainView.fxml", controller);
+            ViewLoader.load(this, "FullMenuView.fxml", this);
         } catch (IOException e) {
             throw new RuntimeException("Can't find view " + "FullMenuView.fxml");
         }
-
-
     }
-
 }

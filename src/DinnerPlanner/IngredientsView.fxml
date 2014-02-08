@@ -10,4 +10,15 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.web.*?>
 
-<BorderPane prefHeight="200.0" prefWidth="100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller" />
+<fx:root type="javafx.scene.layout.BorderPane" prefHeight="200.0" prefWidth="100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
+  <center>
+    <HBox prefHeight="100.0" prefWidth="200.0" />
+  </center>
+  <top>
+    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+      </content>
+    </ScrollPane>
+  </top>
+</fx:root>
