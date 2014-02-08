@@ -3,10 +3,11 @@ package se.kth.csc.iprog.dinnerplanner.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DinnerModel {
+public class DinnerModel implements IDinnerModel{
 	
-
+    private int numberOfGuests;
 	Set<Dish> dishes = new HashSet<Dish>();
+    private Dish [] selectedDishes;
 	
 	/**
 	 * TODO: For Lab2 you need to implement the IDinnerModel interface.
@@ -19,7 +20,9 @@ public class DinnerModel {
 	 * The constructor of the overall model. Set the default values here
 	 */
 	public DinnerModel(){
-		
+
+        numberOfGuests = 0;
+        selectedDishes = new Dish[3];
 		//Adding some example data, you can add more
 		Dish dish1 = new Dish("French toast",Dish.STARTER,"toast.jpg","In a large mixing bowl, beat the eggs. Add the milk, brown sugar and nutmeg; stir well to combine. Soak bread slices in the egg mixture until saturated. Heat a lightly oiled griddle or frying pan over medium high heat. Brown slices on both sides, sprinkle with cinnamon and serve hot.");
 		Ingredient dish1ing1 = new Ingredient("eggs",0.5,"",1);
@@ -121,7 +124,53 @@ public class DinnerModel {
 		}
 		return result;
 	}
-	
-	
 
+
+    @Override
+    public int getNumberOfGuests()
+    {
+        return numberOfGuests;
+    }
+
+    @Override
+    public void setNumberOfGuests(int numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
+    }
+
+    @Override
+    public Dish getSelectedDish(int type) {
+        return selectedDishes[type-1];
+    }
+
+    @Override
+    public Set<Dish> getFullMenu() {
+        Set<Dish> menuDishes = new HashSet<Dish>();
+        for(Dish dish: selectedDishes)
+        {
+            menuDishes.add(dish);
+        }
+        return menuDishes;
+    }
+
+    @Override
+    public Set<Ingredient> getAllIngredients() {
+        Set<Ingredient> allIngredients = new HashSet<Ingredient>();
+        for(Dish d: getFullMenu())
+        {
+            allIngredients.addAll(d.getIngredients());
+        }
+        return allIngredients;
+    }
+
+    @Override
+    public float getTotalMenuPrice() {
+
+        double count = 0;
+
+        for(Dish d: getFullMenu())
+        {
+            count += d.getPrice();
+        }
+        return (float)count;
+    }
 }
