@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class MainView extends BorderPane {
 
-    public MainView(DinnerModel model, MainController controller) {
+    public MainView(MainController controller) {
         try {
             ViewLoader.load(this, "StartView.fxml", controller);
         } catch (IOException e) {

@@ -58,7 +58,34 @@ public class DinnerModel {
 		dish2.addIngredient(dish2ing10);
 		dish2.addIngredient(dish2ing11);
 		dishes.add(dish2);
-		
+
+        for(int i = 0 ; i < 30; i++)
+        {
+            Dish dish3 = new Dish("Ice Cream " + i,Dish.DESERT,"icecream.jpg","Go out and buy some");
+            Ingredient dish3ing1 = new Ingredient("extra lean ground beef",115,"g",20);
+            Ingredient dish3ing2 = new Ingredient("sea salt",0.7,"g",3);
+            Ingredient dish3ing3 = new Ingredient("small onion, diced",0.25,"",2);
+            Ingredient dish3ing4 = new Ingredient("garlic salt",0.6,"g",3);
+            Ingredient dish3ing5 = new Ingredient("Italian seasoning",0.3,"g",3);
+            Ingredient dish3ing6 = new Ingredient("dried oregano",0.3,"g",3);
+            Ingredient dish3ing7 = new Ingredient("crushed red pepper flakes",0.6,"g",3);
+            Ingredient dish3ing8 = new Ingredient("Worcestershire sauce",16,"ml",7);
+            Ingredient dish3ing9 = new Ingredient("milk",20,"ml",4);
+            Ingredient dish3ing10 = new Ingredient("grated Parmesan cheese",5,"g",8);
+            Ingredient dish3ing11 = new Ingredient("seasoned bread crumbs",115,"g",4);
+            dish2.addIngredient(dish3ing1);
+            dish2.addIngredient(dish3ing2);
+            dish2.addIngredient(dish3ing3);
+            dish2.addIngredient(dish3ing4);
+            dish2.addIngredient(dish3ing5);
+            dish2.addIngredient(dish3ing6);
+            dish2.addIngredient(dish3ing7);
+            dish2.addIngredient(dish3ing8);
+            dish2.addIngredient(dish3ing9);
+            dish2.addIngredient(dish3ing10);
+            dish2.addIngredient(dish3ing11);
+            dishes.add(dish3);
+        }
 	}
 	
 	/**
