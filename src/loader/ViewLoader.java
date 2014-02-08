@@ -10,6 +10,14 @@ import java.io.IOException;
  */
 public final class ViewLoader {
 
+    /**
+     * Loads an fxml document for a given view.
+     *
+     * @param node The vıew class that is loading the fxml document
+     * @param fileName name of the file to upload
+     * @param controller Controller class that has all internal members and implements all the callback methods.
+     * @throws IOException
+     */
     public static void load(Node node, String fileName, Object controller) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(node.getClass().getResource(
                 fileName));
