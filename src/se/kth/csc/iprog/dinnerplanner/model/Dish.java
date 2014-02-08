@@ -72,4 +72,13 @@ public class Dish {
 		return false;
 	}
 
+    public double getPrice()
+    {
+        double count = 0;
+        for(Ingredient i: ingredients)
+        {
+            count += i.getPrice();
+        }
+        return count;
+    }
 }

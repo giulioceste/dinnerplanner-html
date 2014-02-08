@@ -6,19 +6,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<BorderPane id="BorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<fx:root type="javafx.scene.layout.BorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <center>
-    <ScrollPane hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-1.0" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
       <content>
-        <FlowPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
+        <FlowPane fx:id="dishFlowPane" maxHeight="-1.0" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
       </content>
     </ScrollPane>
   </center>
   <top>
     <HBox maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
       <children>
-        <TextField prefWidth="200.0" promptText="Search" />
+        <TextField fx:id="searchBox" maxWidth="300.0" onAction="#onSearch" prefWidth="-1.0" promptText="Search" />
       </children>
     </HBox>
   </top>
-</BorderPane>
+</fx:root>

@@ -3,10 +3,11 @@ package se.kth.csc.iprog.dinnerplanner.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DinnerModel {
+public class DinnerModel implements IDinnerModel{
 	
-
+    private int numberOfGuests;
 	Set<Dish> dishes = new HashSet<Dish>();
+    private Dish [] selectedDishes;
 	
 	/**
 	 * TODO: For Lab2 you need to implement the IDinnerModel interface.
@@ -19,7 +20,9 @@ public class DinnerModel {
 	 * The constructor of the overall model. Set the default values here
 	 */
 	public DinnerModel(){
-		
+
+        numberOfGuests = 0;
+        selectedDishes = new Dish[3];
 		//Adding some example data, you can add more
 		Dish dish1 = new Dish("French toast",Dish.STARTER,"toast.jpg","In a large mixing bowl, beat the eggs. Add the milk, brown sugar and nutmeg; stir well to combine. Soak bread slices in the egg mixture until saturated. Heat a lightly oiled griddle or frying pan over medium high heat. Brown slices on both sides, sprinkle with cinnamon and serve hot.");
 		Ingredient dish1ing1 = new Ingredient("eggs",0.5,"",1);
@@ -58,7 +61,34 @@ public class DinnerModel {
 		dish2.addIngredient(dish2ing10);
 		dish2.addIngredient(dish2ing11);
 		dishes.add(dish2);
-		
+
+        for(int i = 0 ; i < 30; i++)
+        {
+            Dish dish3 = new Dish("Ice Cream " + i,Dish.DESERT,"icecream.jpg","Go out and buy some");
+            Ingredient dish3ing1 = new Ingredient("extra lean ground beef",115,"g",20);
+            Ingredient dish3ing2 = new Ingredient("sea salt",0.7,"g",3);
+            Ingredient dish3ing3 = new Ingredient("small onion, diced",0.25,"",2);
+            Ingredient dish3ing4 = new Ingredient("garlic salt",0.6,"g",3);
+            Ingredient dish3ing5 = new Ingredient("Italian seasoning",0.3,"g",3);
+            Ingredient dish3ing6 = new Ingredient("dried oregano",0.3,"g",3);
+            Ingredient dish3ing7 = new Ingredient("crushed red pepper flakes",0.6,"g",3);
+            Ingredient dish3ing8 = new Ingredient("Worcestershire sauce",16,"ml",7);
+            Ingredient dish3ing9 = new Ingredient("milk",20,"ml",4);
+            Ingredient dish3ing10 = new Ingredient("grated Parmesan cheese",5,"g",8);
+            Ingredient dish3ing11 = new Ingredient("seasoned bread crumbs",115,"g",4);
+            dish2.addIngredient(dish3ing1);
+            dish2.addIngredient(dish3ing2);
+            dish2.addIngredient(dish3ing3);
+            dish2.addIngredient(dish3ing4);
+            dish2.addIngredient(dish3ing5);
+            dish2.addIngredient(dish3ing6);
+            dish2.addIngredient(dish3ing7);
+            dish2.addIngredient(dish3ing8);
+            dish2.addIngredient(dish3ing9);
+            dish2.addIngredient(dish3ing10);
+            dish2.addIngredient(dish3ing11);
+            dishes.add(dish3);
+        }
 	}
 	
 	/**
@@ -94,7 +124,53 @@ public class DinnerModel {
 		}
 		return result;
 	}
-	
-	
 
+
+    @Override
+    public int getNumberOfGuests()
+    {
+        return numberOfGuests;
+    }
+
+    @Override
+    public void setNumberOfGuests(int numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
+    }
+
+    @Override
+    public Dish getSelectedDish(int type) {
+        return selectedDishes[type-1];
+    }
+
+    @Override
+    public Set<Dish> getFullMenu() {
+        Set<Dish> menuDishes = new HashSet<Dish>();
+        for(Dish dish: selectedDishes)
+        {
+            menuDishes.add(dish);
+        }
+        return menuDishes;
+    }
+
+    @Override
+    public Set<Ingredient> getAllIngredients() {
+        Set<Ingredient> allIngredients = new HashSet<Ingredient>();
+        for(Dish d: getFullMenu())
+        {
+            allIngredients.addAll(d.getIngredients());
+        }
+        return allIngredients;
+    }
+
+    @Override
+    public float getTotalMenuPrice() {
+
+        double count = 0;
+
+        for(Dish d: getFullMenu())
+        {
+            count += d.getPrice();
+        }
+        return (float)count;
+    }
 }

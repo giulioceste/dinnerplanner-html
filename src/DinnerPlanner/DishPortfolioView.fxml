@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<fx:root type="javafx.scene.layout.BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <bottom>
-    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Description" />
+    <Label fx:id="dishNameLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Description" />
   </bottom>
   <center>
-    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="dishImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
   </center>
-</BorderPane>
+</fx:root>
