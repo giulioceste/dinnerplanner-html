@@ -1,3 +1,22 @@
 .label {
     -fx-font: 16px "Serif";
+    /*-fx-background-color: #CCFF99;*/
 }
+
+.portfolio-custom {
+    -fx-spacing: 8;
+    -fx-padding: 8;
+}
+
+.added-dish-custom{
+    -fx-spacing: 10;
+    -fx-padding: 10;
+}
+
+.dinner-header-label{
+    -fx-font: 24px "Serif";
+    -fx-spacing: 20;
+    -fx-font-weight: bold;
+    -fx-padding: 20;
+}
+
