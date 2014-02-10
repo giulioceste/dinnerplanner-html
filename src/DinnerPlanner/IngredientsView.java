@@ -13,6 +13,7 @@ import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,7 +22,7 @@ import java.util.Set;
 public class IngredientsView extends Pane {
 
     private final DinnerModel model;
-    private final Dish selectedDish;
+    private final Set<Dish> dishes;
 
     @FXML
     private TableView tableIngredients;
@@ -35,7 +36,7 @@ public class IngredientsView extends Pane {
     @FXML
     private TableColumn columnCosts;
 
-    public IngredientsView(DinnerModel model, Dish selectedDish) {
+    public IngredientsView(DinnerModel model, Set<Dish> dishes) {
 
         try {
             ViewLoader.load(this, "IngredientsView.fxml", this);
@@ -44,9 +45,14 @@ public class IngredientsView extends Pane {
         }
 
         this.model = model;
-        this.selectedDish = selectedDish;
+        this.dishes = dishes;
 
-        displayData(selectedDish.getIngredients());
+        Set<Ingredient> allIngredients = new HashSet<Ingredient>();
+        for (Dish dish : dishes) {
+            allIngredients.addAll(dish.getIngredients());
+        }
+
+        displayData(allIngredients);
 
     }
 
