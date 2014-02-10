@@ -90,7 +90,7 @@ public class MainController {
     private FlowPane mainFlowPane;
 
     @FXML
-    private HBox selectedDessertView, selectedMainView, selectedStarterVıew;
+    private BorderPane selectedDessertView, selectedMainView, selectedStarterVıew;
 
     @FXML
     void onDecrementPeopleClicked(ActionEvent event) {
@@ -144,6 +144,7 @@ public class MainController {
         selectedDessertView.managedProperty().bind(selectedDessertView.visibleProperty());
         selectedMainView.managedProperty().bind(selectedMainView.visibleProperty());
         selectedStarterVıew.managedProperty().bind(selectedStarterVıew.visibleProperty());
+        dropDishBox.managedProperty().bind(dropDishBox.visibleProperty());
 
         // Add a search and portfolio view.
         starterTab.setContent(new SearchView(starterDishController));
@@ -177,7 +178,7 @@ public class MainController {
         model.addToMenu(dish);
 
         // Update the view
-        HBox view;
+        BorderPane view;
         switch (dish.getType()){
             case 1:
                 view = selectedStarterVıew;
@@ -189,7 +190,16 @@ public class MainController {
                 view = selectedDessertView;
         }
         view.getChildren().clear();
-        view.getChildren().add(new AddedDishItemView(dish));
+        view.setCenter(new AddedDishItemView(dish));
+        view.setVisible(true);
+    }
+
+    /**
+     * Notification callback that
+     * @param dish
+     */
+    void onAddedDish(Dish dish) {
+         // TODO Update all the UI Components
     }
 
     private Dish getDishByName(String name) {
@@ -202,8 +212,6 @@ public class MainController {
     private boolean hasDishByName(String name) {
         return getDishByName(name) != null;
     }
-
-
 
     /**
      * Drag and drop Event Handler for the destination.

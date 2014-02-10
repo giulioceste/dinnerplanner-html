@@ -1,6 +1,8 @@
 package se.kth.csc.iprog.dinnerplanner.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -27,6 +29,11 @@ public class DinnerModel implements IDinnerModel{
     private static DinnerModel instance;
 
     /**
+     * Notifiers that the model has changed.
+     */
+    private final List<OnModelChangedListener> dishAddedListeners;
+
+    /**
      * Returns the single instance of the Dinner Model.
      *
      * @return The singleton instance of this class.
@@ -48,6 +55,7 @@ public class DinnerModel implements IDinnerModel{
      * The constructor of the overall model. Set the default values here
      */
     private DinnerModel() {
+        dishAddedListeners = new ArrayList<OnModelChangedListener>();
 
         numberOfGuests = 0;
         selectedDishes = new Dish[3];
@@ -211,5 +219,30 @@ public class DinnerModel implements IDinnerModel{
             default:
                 Logger.getGlobal().warning("Incompatible Dish type " + dish);
         }
+    }
+
+    /**
+     *
+     *
+     * @param listener Listener to register with this listener
+     */
+    public void addListener(OnModelChangedListener listener) {
+        if (listener == null) return;
+        if (dishAddedListeners.contains(listener)) return;
+        dishAddedListeners.add(listener);
+    }
+
+    /**
+     * Notifies Model has changed
+     */
+    public interface OnModelChangedListener {
+
+        /**
+         * Notifies listener that a dish was added.
+         *
+         * @param added Dish that was added.
+         */
+        public void onDishAdded(Dish added);
+
     }
 }

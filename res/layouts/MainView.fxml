@@ -45,7 +45,7 @@
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
               <children>
                 <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" text="Number of People" textOverrun="CLIP" HBox.hgrow="SOMETIMES" />
-                <TextField fx:id="numPeopleInputField" maxHeight="1.7976931348623157E308" onAction="#onNumPeopleChanged" prefColumnCount="4" prefWidth="-1.0" HBox.hgrow="NEVER" />
+                <TextField fx:id="numPeopleInputField" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" onAction="#onNumPeopleChanged" prefColumnCount="4" prefWidth="-1.0" HBox.hgrow="NEVER" />
                 <VBox prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER">
                   <children>
                     <Button fx:id="incPeopleButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onIncrementPeopleClicked" text="+" />
@@ -54,7 +54,7 @@
                 </VBox>
               </children>
             </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0">
+            <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0">
               <children>
                 <Label fx:id="totalCostLabel" contentDisplay="LEFT" text="\$ 0.00">
                   <graphic>
@@ -72,9 +72,9 @@
                 </Label>
               </children>
             </HBox>
-            <HBox fx:id="selectedStarterVıew" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
-            <HBox fx:id="selectedMainView" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
-            <HBox fx:id="selectedDessertView" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
+            <BorderPane fx:id="selectedStarterVıew" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
+            <BorderPane id="selectedStarterVıew" fx:id="selectedMainView" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
+            <BorderPane fx:id="selectedDessertView" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
             <VBox fx:id="dropDishBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
               <children>
                 <Label fx:id="dragDishLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Drag your dish to the menu" VBox.vgrow="ALWAYS" />

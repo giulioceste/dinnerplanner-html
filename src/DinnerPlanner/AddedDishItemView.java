@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import loader.ImageLoader;
 import loader.ViewLoader;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 /**
  * Created by halitanil on 08.02.2014.
  */
-public class AddedDishItemView extends BorderPane{
+public class AddedDishItemView extends HBox {
 
     private static final String STARTER = "Starter";
     private static final String MAIN = "Main";
