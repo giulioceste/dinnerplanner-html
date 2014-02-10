@@ -54,7 +54,6 @@ public class SearchController {
         assert dishFlowPane != null : "fx:id=\"dishFlowPane\" was not injected: check your FXML file 'SearchView.fxml'.";
         assert scrollPane != null : "fx:id=\"scrollPane\" was not injected: check your FXML file 'SearchView.fxml'.";
         assert searchBox != null : "fx:id=\"searchBox\" was not injected: check your FXML file 'SearchView.fxml'.";
-
         setupUI();
     }
 
@@ -62,6 +61,8 @@ public class SearchController {
         //make the flow pane strech in width with the scroll pane
         scrollPane.fitToWidthProperty().set(true);
         //adding every dish to the portfolio view.
+        dishFlowPane.getStyleClass().add("/stylesheets/Main.css");
+        scrollPane.getStyleClass().add("/stylesheets/Main.css");
         for (final Dish dish: dishes)
         {
             DishPortfolioView view = new DishPortfolioView(dish);

@@ -46,8 +46,6 @@ public class AddedDishItemView extends BorderPane{
         assert costAddedDishLabel != null : "fx:id=\"costAddedDishLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
         assert nameOfDish != null : "fx:id=\"nameOfDish\" was not injected: check your FXML file 'addedDishItem.fxml'.";
         assert starterLabel != null : "fx:id=\"starterLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
-
-
     }
 
     public AddedDishItemView(Dish dish)
@@ -65,6 +63,6 @@ public class AddedDishItemView extends BorderPane{
         }
 
         starterLabel.setText(dish.getName());
-        costAddedDishLabel.setText("$3.02");
+        costAddedDishLabel.setText("" + dish.getPrice());
     }
 }

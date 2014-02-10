@@ -34,7 +34,11 @@
             </Tab>
             <Tab fx:id="mainTab" text="Main">
               <content>
-                <FlowPane fx:id="mainFlowPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
+                <FlowPane fx:id="mainFlowPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass=".flowpane">
+                  <stylesheets>
+                    <URL value="@../stylesheets/Main.css" />
+                  </stylesheets>
+                </FlowPane>
               </content>
             </Tab>
             <Tab fx:id="dessertTab" content="$null" text="Dessert" />
@@ -45,7 +49,7 @@
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
               <children>
                 <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" text="Number of People" HBox.hgrow="SOMETIMES" />
-                <TextField fx:id="numPeopleInputField" maxHeight="1.7976931348623157E308" onAction="#onNumPeopleChanged" prefColumnCount="4" prefWidth="-1.0" HBox.hgrow="NEVER" />
+                <TextField fx:id="numPeopleInputField" maxHeight="1.7976931348623157E308" onAction="#onNumPeopleChanged" prefColumnCount="4" prefWidth="-1.0" text="3" HBox.hgrow="NEVER" />
                 <VBox prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER">
                   <children>
                     <Button fx:id="incPeopleButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onIncrementPeopleClicked" text="+" />
@@ -65,9 +69,9 @@
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0">
               <children>
-                <Label alignment="CENTER" styleClass="pıppo-label" text="Dinner Menu">
+                <Label alignment="CENTER" styleClass="dinner-header-label" text="Dinner Menu">
                   <stylesheets>
-                    <URL value="@Start.css" />
+                    <URL value="@../stylesheets/Main.css" />
                   </stylesheets>
                 </Label>
               </children>
@@ -90,8 +94,8 @@
         </VBox>
       </items>
       <stylesheets>
-        <URL value="@Base.css" />
-        <URL value="@Start.css" />
+        <URL value="@../stylesheets/Base.css" />
+        <URL value="@../stylesheets/Main.css" />
       </stylesheets>
     </SplitPane>
   </center>
