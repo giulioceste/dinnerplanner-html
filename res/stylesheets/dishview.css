@@ -1,0 +1,25 @@
+.text-preparation {
+    -fx-font-size: 10pt;
+    -fx-border-width: 0;
+    -fx-padding: 3 6 3 6;
+    -fx-background-color: transparent;
+    -fx-base: transparent;
+}
+
+.dish-view-title {
+    -fx-font-size: 24pt;
+    -fx-padding: 5 0 5 10;
+}
+
+.dish-view-subtitle {
+    -fx-font-size: 11pt;
+    -fx-padding: 0 0 0 15;
+}
+
+.dish-view-image {
+    -fx-padding: 5 5 5 5;
+}
+
+.dish-view-table {
+    -fx-font-size: 10pt;
+}
