@@ -61,8 +61,8 @@ public class SearchController {
         //make the flow pane strech in width with the scroll pane
         scrollPane.fitToWidthProperty().set(true);
         //adding every dish to the portfolio view.
-        dishFlowPane.getStyleClass().add("/stylesheets/Main.css");
-        scrollPane.getStyleClass().add("/stylesheets/Main.css");
+        dishFlowPane.getStyleClass().add("/layouts/Main.css");
+        scrollPane.getStyleClass().add("/layouts/Main.css");
         for (final Dish dish: dishes)
         {
             DishPortfolioView view = new DishPortfolioView(dish);
@@ -98,13 +98,4 @@ public class SearchController {
         }
     }
 
-    /**
-     * Class that handles double clicks on menu
-     */
-    private class DoubleClickEventHandler implements EventHandler<MouseEvent> {
-        @Override
-        public void handle(MouseEvent mouseEvent) {
-
-        }
-    }
 }

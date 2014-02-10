@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
 <fx:root type="javafx.scene.layout.HBox" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="container" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
     <ImageView fx:id="addedDishImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" />
@@ -21,17 +20,17 @@
         </Label>
       </children>
     </VBox>
-    <Button fx:id="cancelDish" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="" HBox.hgrow="NEVER">
+    <Button fx:id="cancelDish" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onRemoveDish" prefHeight="-1.0" prefWidth="50.0" text="" HBox.hgrow="NEVER">
       <graphic>
         <ImageView fitHeight="50.0" fitWidth="50.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../icons/trash_can.png" />
+            <Image url="@../icons/Trash-can-icon.png" />
           </image>
         </ImageView>
       </graphic>
     </Button>
   </children>
   <stylesheets>
-    <URL value="@../stylesheets/AddedDishItem.css" />
+    <URL value="@AddedDishItem.css" />
   </stylesheets>
 </fx:root>

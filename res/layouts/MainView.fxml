@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.net.URL?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import java.net.URL?>
 <fx:root type="javafx.scene.layout.BorderPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <center>
     <SplitPane dividerPositions="0.6699346405228758" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
@@ -58,18 +55,14 @@
               <children>
                 <Label fx:id="totalCostLabel" contentDisplay="LEFT" text="\$ 0.00">
                   <graphic>
-                    <Label id="totalCostLabel" text="Total Cost" />
+                    <Label id="totalCostLabel" text="Total Cost:" />
                   </graphic>
                 </Label>
               </children>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0">
               <children>
-                <Label alignment="CENTER" styleClass="pıppo-label" text="Dinner Menu">
-                  <stylesheets>
-                    <URL value="@Start.css" />
-                  </stylesheets>
-                </Label>
+                <Label alignment="CENTER" text="Dinner Menu"/>
               </children>
             </HBox>
             <BorderPane fx:id="selectedStarterVıew" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
@@ -89,14 +82,10 @@
           </children>
         </VBox>
       </items>
-      <stylesheets>
-        <URL value="@Base.css" />
-        <URL value="@Start.css" />
-      </stylesheets>
     </SplitPane>
   </center>
   <stylesheets>
-    <URL value="@../stylesheets/Base.css" />
-    <URL value="@../stylesheets/Main.css" />
+    <URL value="@Base.css" />
+    <URL value="@Main.css" />
   </stylesheets>
 </fx:root>

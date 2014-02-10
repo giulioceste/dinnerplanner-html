@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -15,25 +16,23 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 
-public class MainController {
+public class MainController implements DinnerModel.OnModelChangedListener {
 
     private final DinnerModel model;
 
     private final SearchController starterDishController, mainDishController, dessertController;
-
-    public MainController(DinnerModel model) {
-        this.model = model;
-        starterDishController = new SearchController(model.getDishesOfType(1));
-        mainDishController = new SearchController(model.getDishesOfType(2));
-        dessertController = new SearchController(model.getDishesOfType(3));
-    }
 
     @FXML
     private ResourceBundle resources;
@@ -42,43 +41,25 @@ public class MainController {
     private URL location;
 
     @FXML
-    private Button decrPeopleButton;
+    private Tab dessertTab, mainTab, starterTab;
 
     @FXML
-    private Tab dessertTab;
-
-    @FXML
-    private Pane dishPane;
+    private Pane dishPane, dishListPane;
 
     @FXML
     private Label dragDishLabel;
 
     @FXML
-    private Button incPeopleButton;
-
-    @FXML
-    private Button ingButton;
-
-    @FXML
-    private Tab mainTab;
+    private Button incPeopleButton, ingButton, prepButton, decrPeopleButton;
 
     @FXML
     private TextField numPeopleInputField;
-
-    @FXML
-    private Button prepButton;
-
-    @FXML
-    private Tab starterTab;
 
     @FXML
     private Label totalCostLabel, dishNameLabel;
 
     @FXML
     private ImageView dishImage;
-
-    @FXML
-    private Pane dishListPane;
 
     @FXML
     private GridPane gridPane;
@@ -92,6 +73,14 @@ public class MainController {
     @FXML
     private BorderPane selectedDessertView, selectedMainView, selectedStarterVıew;
 
+    public MainController(DinnerModel model) {
+        this.model = model;
+        starterDishController = new SearchController(model.getDishesOfType(1));
+        mainDishController = new SearchController(model.getDishesOfType(2));
+        dessertController = new SearchController(model.getDishesOfType(3));
+        model.addListener(this);
+    }
+
     @FXML
     void onDecrementPeopleClicked(ActionEvent event) {
     }
@@ -102,14 +91,35 @@ public class MainController {
 
     @FXML
     void onIngredientsClicked(ActionEvent event) {
+        Stage stage = new Stage();
+        stage.setTitle("Dinner Planner - Ingredients");
+        stage.setScene(new Scene(new IngredientsView(model, model.getFullMenu()), 600, 400));
+        stage.show();
     }
 
     @FXML
     void onNumPeopleChanged(ActionEvent event) {
+
     }
 
     @FXML
     void onPreparationClicked(ActionEvent event) {
+        // Create a new window for the preparations.
+        Stage stage = new Stage();
+        stage.setTitle("Dinner Planner - Preparation");
+
+        // Create a reference to the controller.
+        final FullMenuController controller = new FullMenuController(model);
+        stage.setScene(new Scene(new FullMenuView(controller), 600, 400));
+
+        // When the new stage closes remove the controller from the model.
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                model.removeListener(controller);
+            }
+        });
+        stage.show();
     }
 
     @FXML
@@ -161,9 +171,10 @@ public class MainController {
         // Allow the vboc children to expand in width with the VBox.
         menuPanel.setFillWidth(true);
         dropDishBox.setFillWidth(true);
+
+        // Set the current price of the menu.
+        updatePrice();
     }
-
-
 
     /**
      * Adds a dish to the Full Menu.
@@ -174,10 +185,7 @@ public class MainController {
     private void addDishToSelected(Dish dish) {
         assert dish != null: "Dish being selected cannot be null";
 
-        // Update the model.
-        model.addToMenu(dish);
-
-        // Update the view
+        // Update the Selected dish view.
         BorderPane view;
         switch (dish.getType()){
             case 1:
@@ -190,16 +198,61 @@ public class MainController {
                 view = selectedDessertView;
         }
         view.getChildren().clear();
-        view.setCenter(new AddedDishItemView(dish));
+        view.setCenter(new AddedDishItemView(model, dish));
         view.setVisible(true);
+
+        // Update the price
+        updatePrice();
+
+        // Update Buttons
+        updateButtons();
+    }
+
+    private void removeDishFromSelected(Dish dish) {
+        assert dish != null: "Dish being removed cannot be null";
+
+        BorderPane view;
+        switch (dish.getType()){
+            case 1:
+                view = selectedStarterVıew;
+                break;
+            case 2:
+                view = selectedMainView;
+                break;
+            default:
+                view = selectedDessertView;
+        }
+        view.getChildren().clear();
+        view.setVisible(false);
+        /// Update price
+        updatePrice();
+
+        // Update Buttons
+        updateButtons();
     }
 
     /**
-     * Notification callback that
-     * @param dish
+     * Updates the price of the menu based off of the models current state.
      */
-    void onAddedDish(Dish dish) {
-         // TODO Update all the UI Components
+    private void updatePrice() {
+        double cost = 0;
+        for (Dish dish: model.getFullMenu()) {
+            cost += dish.getPrice();
+        }
+        Locale locale = Locale.getDefault();
+        Currency currentCurrency = Currency.getInstance(locale);
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        String costStr = currencyFormatter.format(cost) + " " + currentCurrency.getDisplayName();
+        totalCostLabel.setText(costStr);
+    }
+
+    /**
+     * Updates the buttons based on whether or not there are dishes in the menu.
+     */
+    private void updateButtons() {
+        boolean disable = model.getFullMenu().isEmpty();
+        prepButton.setDisable(disable);
+        ingButton.setDisable(disable);
     }
 
     private Dish getDishByName(String name) {
@@ -211,6 +264,21 @@ public class MainController {
 
     private boolean hasDishByName(String name) {
         return getDishByName(name) != null;
+    }
+
+    @Override
+    public void onDishAdded(Dish added) {
+        addDishToSelected(added);
+    }
+
+    @Override
+    public void onDishRemoved(Dish removed) {
+        removeDishFromSelected(removed);
+    }
+
+    @Override
+    public void onNumberOfGuestChanged(int newAmount, int oldAmount) {
+
     }
 
     /**
@@ -254,8 +322,8 @@ public class MainController {
                 if (db.hasString() && hasDishByName(dragEvent.getDragboard().getString())) {
                     // TODO add dish to drop Dish Box
                     Dish dish = getDishByName(db.getString());
-                    addDishToSelected(dish);
-                    totalCostLabel.setText("" + dish.getPrice());
+                    // Update the model.
+                    model.addToMenu(dish);
                     success = true;
                 }
                 dragEvent.setDropCompleted(success);
