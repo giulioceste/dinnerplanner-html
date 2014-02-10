@@ -14,7 +14,7 @@ public interface IDinnerModel {
 	public int getNumberOfGuests();
 
     /**
-     *
+     * Set the number of guest going to the party.
      *
      * @param numberOfGuests Number of guests invited to the event.
      */
@@ -49,4 +49,12 @@ public interface IDinnerModel {
      * @param dish Dish to add to menu
      */
     public void addToMenu(Dish dish);
+
+    /**
+     * Attempts to remove dish from the menu.
+     *
+     * @param dish Dish to remove
+     * @return Whether the dish was successfully removed.
+     */
+    public boolean removeFromMenu(Dish dish);
 }

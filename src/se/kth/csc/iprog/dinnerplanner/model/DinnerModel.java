@@ -31,7 +31,7 @@ public class DinnerModel implements IDinnerModel{
     /**
      * Notifiers that the model has changed.
      */
-    private final List<OnModelChangedListener> dishAddedListeners;
+    private final List<OnModelChangedListener> listeners;
 
     /**
      * Returns the single instance of the Dinner Model.
@@ -55,9 +55,9 @@ public class DinnerModel implements IDinnerModel{
      * The constructor of the overall model. Set the default values here
      */
     private DinnerModel() {
-        dishAddedListeners = new ArrayList<OnModelChangedListener>();
+        listeners = new ArrayList<OnModelChangedListener>();
 
-        numberOfGuests = 0;
+        setNumberOfGuests(0);
         selectedDishes = new Dish[3];
         //Adding some example data, you can add more
         Dish dish1 = new Dish("French toast",Dish.STARTER,"toast.jpg","In a large mixing bowl, beat the eggs. Add the milk, brown sugar and nutmeg; stir well to combine. Soak bread slices in the egg mixture until saturated. Heat a lightly oiled griddle or frying pan over medium high heat. Brown slices on both sides, sprinkle with cinnamon and serve hot.");
@@ -100,29 +100,13 @@ public class DinnerModel implements IDinnerModel{
 
         for(int i = 0 ; i < 30; i++)
         {
-            Dish dish3 = new Dish("Ice Cream " + i,Dish.DESERT,"icecream.jpg","Go out and buy some");
-            Ingredient dish3ing1 = new Ingredient("extra lean ground beef",115,"g",20);
-            Ingredient dish3ing2 = new Ingredient("sea salt",0.7,"g",3);
-            Ingredient dish3ing3 = new Ingredient("small onion, diced",0.25,"",2);
-            Ingredient dish3ing4 = new Ingredient("garlic salt",0.6,"g",3);
-            Ingredient dish3ing5 = new Ingredient("Italian seasoning",0.3,"g",3);
-            Ingredient dish3ing6 = new Ingredient("dried oregano",0.3,"g",3);
-            Ingredient dish3ing7 = new Ingredient("crushed red pepper flakes",0.6,"g",3);
-            Ingredient dish3ing8 = new Ingredient("Worcestershire sauce",16,"ml",7);
+            Dish dish3 = new Dish("Ice Cream " + i, Dish.DESERT, "icecream.jpg", "Go out and buy some");
             Ingredient dish3ing9 = new Ingredient("milk",20,"ml",4);
             Ingredient dish3ing10 = new Ingredient("grated Parmesan cheese",5,"g",8);
             Ingredient dish3ing11 = new Ingredient("seasoned bread crumbs",115,"g",4);
-            dish2.addIngredient(dish3ing1);
-            dish2.addIngredient(dish3ing2);
-            dish2.addIngredient(dish3ing3);
-            dish2.addIngredient(dish3ing4);
-            dish2.addIngredient(dish3ing5);
-            dish2.addIngredient(dish3ing6);
-            dish2.addIngredient(dish3ing7);
-            dish2.addIngredient(dish3ing8);
-            dish2.addIngredient(dish3ing9);
-            dish2.addIngredient(dish3ing10);
-            dish2.addIngredient(dish3ing11);
+            dish3.addIngredient(dish3ing9);
+            dish3.addIngredient(dish3ing10);
+            dish3.addIngredient(dish3ing11);
             dishes.add(dish3);
         }
     }
@@ -170,7 +154,13 @@ public class DinnerModel implements IDinnerModel{
 
     @Override
     public void setNumberOfGuests(int numberOfGuests) {
+        if (numberOfGuests < 0) return; // Can't set to negative number
+        if (numberOfGuests == this.numberOfGuests) return; // No Change.
+        int oldVal =  this.numberOfGuests;
         this.numberOfGuests = numberOfGuests;
+        for (OnModelChangedListener listener : listeners) {
+            listener.onNumberOfGuestChanged(this.numberOfGuests, oldVal);
+        }
     }
 
     @Override
@@ -214,22 +204,55 @@ public class DinnerModel implements IDinnerModel{
             case Dish.STARTER:
             case Dish.MAIN:
             case Dish.DESERT:
+                Dish current = selectedDishes[dish.getType() - 1];
+                if (current != null) {
+                    // Check if the dish is already placed
+                    if (dish.equals(current)) return;
+                    // Remove dish from menu.
+                    removeFromMenu(current);
+                }
                 selectedDishes[dish.getType() - 1] = dish;
                 break;
             default:
                 Logger.getGlobal().warning("Incompatible Dish type " + dish);
         }
+
+        for (OnModelChangedListener listener: listeners) {
+            listener.onDishAdded(dish);
+        }
+    }
+
+    @Override
+    public boolean removeFromMenu(Dish dish) {
+        Set<Dish> selected = getFullMenu();
+        if (!selected.contains(dish))
+            return false;
+        selectedDishes[dish.getType() - 1] = null;
+        for (OnModelChangedListener listener: listeners) {
+            listener.onDishRemoved(dish);
+        }
+        return true;
     }
 
     /**
-     *
+     * Adds a listener to this.  The listener
      *
      * @param listener Listener to register with this listener
      */
     public void addListener(OnModelChangedListener listener) {
         if (listener == null) return;
-        if (dishAddedListeners.contains(listener)) return;
-        dishAddedListeners.add(listener);
+        if (this.listeners.contains(listener)) return;
+        this.listeners.add(listener);
+    }
+
+    /**
+     * Remove the listener from this.
+     *
+     * @param listener Listener to remove.
+     * @return Whether the listener was successfully removed.
+     */
+    public boolean removeListener(OnModelChangedListener listener) {
+        return listeners.remove(listener);
     }
 
     /**
@@ -238,11 +261,26 @@ public class DinnerModel implements IDinnerModel{
     public interface OnModelChangedListener {
 
         /**
-         * Notifies listener that a dish was added.
+         * Notifies listener that a dish was added to the menu.
          *
          * @param added Dish that was added.
          */
         public void onDishAdded(Dish added);
+
+        /**
+         * Notifies listener that a dish was removed from the menu.
+         *
+         * @param removed The dish removed
+         */
+        public void onDishRemoved(Dish removed);
+
+        /**
+         * Notifies the number of guests attending the event has been changed.
+         *
+         * @param newAmount new amount of guest.
+         * @param oldAmount old amount of guest.
+         */
+        public void onNumberOfGuestChanged(int newAmount, int oldAmount);
 
     }
 }

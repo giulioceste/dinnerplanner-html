@@ -1,5 +1,6 @@
 package DinnerPlanner;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import loader.ImageLoader;
 import loader.ViewLoader;
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
 import java.io.FileNotFoundException;
@@ -17,6 +19,9 @@ import java.util.ResourceBundle;
  * Created by halitanil on 08.02.2014.
  */
 public class AddedDishItemView extends HBox {
+
+    private final DinnerModel model;
+    private final Dish dish;
 
     private static final String STARTER = "Starter";
     private static final String MAIN = "Main";
@@ -46,12 +51,19 @@ public class AddedDishItemView extends HBox {
 
     }
 
-    public AddedDishItemView(Dish dish)
+    public AddedDishItemView(DinnerModel model, Dish dish)
     {
+        // Argument check.
+        if (model == null)
+            throw new IllegalArgumentException("Model cannot be null");
+        if (dish == null)
+            throw new IllegalArgumentException("Dish cannot be null");
+        this.model = model;
+        this.dish = dish;
         try{
             ViewLoader.load(this,"addedDishItem.fxml", this);
         }catch(Exception ex){
-            throw new RuntimeException("Error loading the view DishPortfolioView.fxml");
+            throw new RuntimeException("Error loading the view DishPortfolioView.fxml: " + ex.getMessage());
         }
         try {
             addedDishImage.setImage(ImageLoader.load(dish.getImage()));
@@ -74,5 +86,10 @@ public class AddedDishItemView extends HBox {
         label += ": " + dish.getName();
         dishLabel.setText(label);
         costAddedDishLabel.setText("$3.02");
+    }
+
+    @FXML
+    void onRemoveDish(ActionEvent event) {
+        model.removeFromMenu(dish);
     }
 }

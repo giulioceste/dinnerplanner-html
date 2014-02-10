@@ -30,7 +30,7 @@
   </center>
   <!-- </BorderPane> -->
   <stylesheets>
-    <URL value="@../stylesheets/dishview.css" />
+    <URL value="@dishview.css" />
   </stylesheets>
   <top>
     <HBox maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
