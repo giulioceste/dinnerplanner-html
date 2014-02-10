@@ -73,7 +73,7 @@
               <children>
                 <Label alignment="CENTER" styleClass="pıppo-label" text="Dinner Menu">
                   <stylesheets>
-                    <URL value="@../../res/stylesheets/Main.css" />
+                    <URL value="@Start.css" />
                   </stylesheets>
                 </Label>
               </children>
@@ -108,8 +108,8 @@
         </VBox>
       </items>
       <stylesheets>
-        <URL value="@../../res/stylesheets/Base.css" />
-        <URL value="@../../res/stylesheets/Main.css" />
+        <URL value="@Base.css" />
+        <URL value="@Start.css" />
       </stylesheets>
     </SplitPane>
   </center>

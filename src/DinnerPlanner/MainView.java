@@ -2,7 +2,6 @@ package DinnerPlanner;
 
 import javafx.scene.layout.BorderPane;
 import loader.ViewLoader;
-import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 
 import java.io.IOException;
 

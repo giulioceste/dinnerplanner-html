@@ -112,23 +112,23 @@ public class MainController {
 
     @FXML
     void initialize() {
-        assert decrPeopleButton != null : "fx:id=\"decrPeopleButton\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert dessertTab != null : "fx:id=\"dessertTab\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert dishListPane != null : "fx:id=\"dishListPane\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert dragDishLabel != null : "fx:id=\"dragDishLabel\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert dropDishBox != null : "fx:id=\"dropDishBox\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert gridPane != null : "fx:id=\"gridPane\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert incPeopleButton != null : "fx:id=\"incPeopleButton\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert ingButton != null : "fx:id=\"ingButton\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert mainFlowPane != null : "fx:id=\"mainFlowPane\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert mainTab != null : "fx:id=\"mainTab\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert numPeopleInputField != null : "fx:id=\"numPeopleInputField\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert prepButton != null : "fx:id=\"prepButton\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert selectedDessertView != null : "fx:id=\"selectedDessertView\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert selectedMainView != null : "fx:id=\"selectedMainView\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert selectedStarterVıew != null : "fx:id=\"selectedStarterVıew\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert starterTab != null : "fx:id=\"starterTab\" was not injected: check your FXML file 'StartView.fxml'.";
-        assert totalCostLabel != null : "fx:id=\"totalCostLabel\" was not injected: check your FXML file 'StartView.fxml'.";
+        assert decrPeopleButton != null : "fx:id=\"decrPeopleButton\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert dessertTab != null : "fx:id=\"dessertTab\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert dishListPane != null : "fx:id=\"dishListPane\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert dragDishLabel != null : "fx:id=\"dragDishLabel\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert dropDishBox != null : "fx:id=\"dropDishBox\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert gridPane != null : "fx:id=\"gridPane\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert incPeopleButton != null : "fx:id=\"incPeopleButton\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert ingButton != null : "fx:id=\"ingButton\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert mainFlowPane != null : "fx:id=\"mainFlowPane\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert mainTab != null : "fx:id=\"mainTab\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert numPeopleInputField != null : "fx:id=\"numPeopleInputField\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert prepButton != null : "fx:id=\"prepButton\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert selectedDessertView != null : "fx:id=\"selectedDessertView\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert selectedMainView != null : "fx:id=\"selectedMainView\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert selectedStarterVıew != null : "fx:id=\"selectedStarterVıew\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert starterTab != null : "fx:id=\"starterTab\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert totalCostLabel != null : "fx:id=\"totalCostLabel\" was not injected: check your FXML file 'MainView.fxml'.";
 
         selectedDessertView.managedProperty().bind(selectedDessertView.visibleProperty());
         selectedMainView.managedProperty().bind(selectedMainView.visibleProperty());
@@ -148,7 +148,7 @@ public class MainController {
                  */
                 if (dragEvent.getGestureSource() != dropDishBox &&
                         dragEvent.getDragboard().hasString() && hasDishByName(dragEvent.getDragboard().getString())) {
-                     dragEvent.acceptTransferModes(TransferMode.LINK);
+                     dragEvent.acceptTransferModes(TransferMode.ANY);
                 }
                 dragEvent.consume();
             }
@@ -179,7 +179,6 @@ public class MainController {
                 /*
                 Check if we have a Dish in the dragboard
                  */
-
                 Dragboard db = dragEvent.getDragboard();
                 boolean success = false;
                 if (db.hasString() && hasDishByName(dragEvent.getDragboard().getString())) {
