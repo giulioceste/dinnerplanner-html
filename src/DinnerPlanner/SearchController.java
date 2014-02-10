@@ -3,13 +3,13 @@ package DinnerPlanner;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
 import java.net.URL;
@@ -61,8 +61,8 @@ public class SearchController {
         //make the flow pane strech in width with the scroll pane
         scrollPane.fitToWidthProperty().set(true);
         //adding every dish to the portfolio view.
-        dishFlowPane.getStyleClass().add("/stylesheets/Main.css");
-        scrollPane.getStyleClass().add("/stylesheets/Main.css");
+        dishFlowPane.getStyleClass().add("/layouts/Main.css");
+        scrollPane.getStyleClass().add("/layouts/Main.css");
         for (final Dish dish: dishes)
         {
             DishPortfolioView view = new DishPortfolioView(dish);
@@ -72,7 +72,6 @@ public class SearchController {
             view.setOnDragDetected(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    // TODO Change Transfer mode to LINK
                     Dragboard db = dishFlowPane.startDragAndDrop(TransferMode.ANY);
                     // temporarily placıng the dish name in the clipboard
                     ClipboardContent content = new ClipboardContent();
@@ -82,6 +81,21 @@ public class SearchController {
                 }
             });
 
+            view.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    // On a double click of the primary mouse button open up a dish specific page.
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2){
+                        // TODO Open up DishView about this particular dish.
+                        Stage stage = new Stage();
+                        stage.setTitle("Dinner Planner - " + dish.getName());
+                        stage.setScene(new Scene(new DishView(DinnerModel.getInstance(),
+                                dish), 600, 400));
+                        stage.show();
+                    }
+                }
+            });
         }
     }
+
 }
