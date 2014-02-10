@@ -10,7 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = new MainView(new MainController(new DinnerModel()));
+        Parent root = new MainView(new MainController(DinnerModel.getInstance()));
         primaryStage.setTitle("Dinner Planner");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();

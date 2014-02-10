@@ -1,0 +1,8 @@
+.container {
+    -fx-spacing: 5;
+    -fx-padding: 3;
+}
+
+.button {
+    -fx-background-color: rgba(0,0,0,0);
+}

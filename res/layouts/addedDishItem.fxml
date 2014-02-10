@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-
-<fx:root type="javafx.scene.layout.BorderPane" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="flowpane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
-  <center>
-    <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+<fx:root type="javafx.scene.layout.HBox" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="container" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <ImageView fx:id="addedDishImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" />
+    <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="container" HBox.hgrow="ALWAYS">
       <children>
-        <Label fx:id="starterLabel" text="Dish">
-          <graphic>
-            <Label fx:id="nameOfDish" text="Starter:" />
-          </graphic>
-        </Label>
+        <Label id="starterLabel" fx:id="dishLabel" text="" />
         <Label fx:id="costAddedDishLabel" text="">
           <graphic>
             <Label id="costLabel" text="Cost" />
@@ -24,18 +20,17 @@
         </Label>
       </children>
     </VBox>
-  </center>
-  <left>
-    <ImageView fx:id="addedDishImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="added-dish-custom" />
-  </left>
-  <right>
-    <VBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0">
-      <children>
-        <Button fx:id="cancelDish" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="X" />
-      </children>
-    </VBox>
-  </right>
+    <Button fx:id="cancelDish" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onRemoveDish" prefHeight="-1.0" prefWidth="50.0" text="" HBox.hgrow="NEVER">
+      <graphic>
+        <ImageView fitHeight="50.0" fitWidth="50.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../icons/Trash-can-icon.png" />
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+  </children>
   <stylesheets>
-    <URL value="@../stylesheets/Main.css" />
+    <URL value="@AddedDishItem.css" />
   </stylesheets>
 </fx:root>

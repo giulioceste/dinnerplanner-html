@@ -2,7 +2,6 @@ package DinnerPlanner;
 
 import javafx.scene.layout.BorderPane;
 import loader.ViewLoader;
-import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 
 import java.io.IOException;
 
@@ -11,11 +10,13 @@ import java.io.IOException;
  */
 public class FullMenuView extends BorderPane {
 
-    public FullMenuView(DinnerModel model) {
+    public FullMenuView(FullMenuController controller) {
+        if (controller == null)
+            throw new IllegalArgumentException("Can't have null controller");
         try {
-            ViewLoader.load(this, "FullMenuView.fxml", this);
+            ViewLoader.load(this, "PreparationView.fxml", controller);
         } catch (IOException e) {
-            throw new RuntimeException("Can't find view " + "FullMenuView.fxml");
+            throw new RuntimeException("Can't find view " + "PreparationView.fxml");
         }
     }
 }

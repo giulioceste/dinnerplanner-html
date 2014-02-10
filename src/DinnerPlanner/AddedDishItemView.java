@@ -1,12 +1,14 @@
 package DinnerPlanner;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import loader.ImageLoader;
 import loader.ViewLoader;
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
 import java.io.FileNotFoundException;
@@ -16,7 +18,14 @@ import java.util.ResourceBundle;
 /**
  * Created by halitanil on 08.02.2014.
  */
-public class AddedDishItemView extends BorderPane{
+public class AddedDishItemView extends HBox {
+
+    private final DinnerModel model;
+    private final Dish dish;
+
+    private static final String STARTER = "Starter";
+    private static final String MAIN = "Main";
+    private static final String DESSERT = "Dessert";
 
     @FXML
     private ResourceBundle resources;
@@ -31,29 +40,30 @@ public class AddedDishItemView extends BorderPane{
     private Button cancelDish;
 
     @FXML
-    private Label costAddedDishLabel;
-
-    @FXML
-    private Label nameOfDish;
-
-    @FXML
-    private Label starterLabel;
+    private Label costAddedDishLabel, dishLabel;
 
     @FXML
     void initialize() {
         assert addedDishImage != null : "fx:id=\"addedDishImage\" was not injected: check your FXML file 'addedDishItem.fxml'.";
         assert cancelDish != null : "fx:id=\"cancelDish\" was not injected: check your FXML file 'addedDishItem.fxml'.";
         assert costAddedDishLabel != null : "fx:id=\"costAddedDishLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
-        assert nameOfDish != null : "fx:id=\"nameOfDish\" was not injected: check your FXML file 'addedDishItem.fxml'.";
-        assert starterLabel != null : "fx:id=\"starterLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
+        assert dishLabel != null : "fx:id=\"dishLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
+
     }
 
-    public AddedDishItemView(Dish dish)
+    public AddedDishItemView(DinnerModel model, Dish dish)
     {
+        // Argument check.
+        if (model == null)
+            throw new IllegalArgumentException("Model cannot be null");
+        if (dish == null)
+            throw new IllegalArgumentException("Dish cannot be null");
+        this.model = model;
+        this.dish = dish;
         try{
             ViewLoader.load(this,"addedDishItem.fxml", this);
         }catch(Exception ex){
-            throw new RuntimeException("Error loading the view DishPortfolioView.fxml");
+            throw new RuntimeException("Error loading the view DishPortfolioView.fxml: " + ex.getMessage());
         }
         try {
             addedDishImage.setImage(ImageLoader.load(dish.getImage()));
@@ -62,7 +72,24 @@ public class AddedDishItemView extends BorderPane{
             addedDishImage.setVisible(false);
         }
 
-        starterLabel.setText(dish.getName());
-        costAddedDishLabel.setText("" + dish.getPrice());
+        String label = "";
+        switch (dish.getType()) {
+            case Dish.STARTER:
+                label += STARTER;
+                break;
+            case Dish.MAIN:
+                label += MAIN;
+                break;
+            default:
+                label += DESSERT;
+        }
+        label += ": " + dish.getName();
+        dishLabel.setText(label);
+        costAddedDishLabel.setText("$3.02");
+    }
+
+    @FXML
+    void onRemoveDish(ActionEvent event) {
+        model.removeFromMenu(dish);
     }
 }

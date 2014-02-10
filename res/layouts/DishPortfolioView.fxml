@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import java.net.URL?>
 <fx:root type="javafx.scene.layout.BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="-1.0" styleClass="portfolio-custom" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <bottom>
     <Label fx:id="dishNameLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Description" />
@@ -16,6 +11,6 @@
     <ImageView fx:id="dishImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
   </center>
   <stylesheets>
-    <URL value="@../stylesheets/Main.css" />
+    <URL value="@Main.css" />
   </stylesheets>
 </fx:root>

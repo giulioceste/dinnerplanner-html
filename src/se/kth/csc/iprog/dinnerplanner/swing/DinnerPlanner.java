@@ -1,9 +1,9 @@
 package se.kth.csc.iprog.dinnerplanner.swing;
 
-import javax.swing.JFrame;
+import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
+import se.kth.csc.iprog.dinnerplanner.swing.view.MainView;
 
-import se.kth.csc.iprog.dinnerplanner.model.*;
-import se.kth.csc.iprog.dinnerplanner.swing.view.*;
+import javax.swing.*;
 
 
 public class DinnerPlanner extends JFrame {
@@ -14,7 +14,7 @@ public class DinnerPlanner extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}	
 	
-	private DinnerModel model = new DinnerModel();
+	private DinnerModel model = DinnerModel.getInstance();
 
 	public DinnerModel getModel() {
 		return model;
