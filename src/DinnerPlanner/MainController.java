@@ -247,6 +247,7 @@ public class MainController {
                     // TODO add dish to drop Dish Box
                     Dish dish = getDishByName(db.getString());
                     addDishToSelected(dish);
+                    totalCostLabel.setText("" + dish.getPrice());
                     success = true;
                 }
                 dragEvent.setDropCompleted(success);
