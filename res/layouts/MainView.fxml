@@ -8,7 +8,7 @@
 
 <fx:root type="javafx.scene.layout.BorderPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <center>
-    <SplitPane dividerPositions="0.6694078947368421" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+    <SplitPane dividerPositions="0.6699346405228758" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
       <items>
         <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" rotateGraphic="false" tabClosingPolicy="UNAVAILABLE">
           <tabs>
@@ -40,11 +40,11 @@
             <Tab fx:id="dessertTab" content="$null" text="Dessert" />
           </tabs>
         </TabPane>
-        <VBox alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+        <VBox fx:id="menuPanel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
           <children>
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
               <children>
-                <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" text="Number of People" HBox.hgrow="SOMETIMES" />
+                <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" text="Number of People" textOverrun="CLIP" HBox.hgrow="SOMETIMES" />
                 <TextField fx:id="numPeopleInputField" maxHeight="1.7976931348623157E308" onAction="#onNumPeopleChanged" prefColumnCount="4" prefWidth="-1.0" HBox.hgrow="NEVER" />
                 <VBox prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER">
                   <children>
@@ -75,9 +75,9 @@
             <HBox fx:id="selectedStarterVıew" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
             <HBox fx:id="selectedMainView" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
             <HBox fx:id="selectedDessertView" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
-            <VBox fx:id="dropDishBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+            <VBox fx:id="dropDishBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
               <children>
-                <Label fx:id="dragDishLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="-1.0" text="Drag your dish to the menu" />
+                <Label fx:id="dragDishLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Drag your dish to the menu" VBox.vgrow="ALWAYS" />
               </children>
             </VBox>
             <HBox alignment="BOTTOM_CENTER" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="SOMETIMES">

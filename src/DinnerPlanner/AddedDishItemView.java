@@ -18,6 +18,10 @@ import java.util.ResourceBundle;
  */
 public class AddedDishItemView extends BorderPane{
 
+    private static final String STARTER = "Starter";
+    private static final String MAIN = "Main";
+    private static final String DESSERT = "Dessert";
+
     @FXML
     private ResourceBundle resources;
 
@@ -31,22 +35,14 @@ public class AddedDishItemView extends BorderPane{
     private Button cancelDish;
 
     @FXML
-    private Label costAddedDishLabel;
-
-    @FXML
-    private Label nameOfDish;
-
-    @FXML
-    private Label starterLabel;
+    private Label costAddedDishLabel, dishLabel;
 
     @FXML
     void initialize() {
         assert addedDishImage != null : "fx:id=\"addedDishImage\" was not injected: check your FXML file 'addedDishItem.fxml'.";
         assert cancelDish != null : "fx:id=\"cancelDish\" was not injected: check your FXML file 'addedDishItem.fxml'.";
         assert costAddedDishLabel != null : "fx:id=\"costAddedDishLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
-        assert nameOfDish != null : "fx:id=\"nameOfDish\" was not injected: check your FXML file 'addedDishItem.fxml'.";
-        assert starterLabel != null : "fx:id=\"starterLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
-
+        assert dishLabel != null : "fx:id=\"dishLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
 
     }
 
@@ -64,7 +60,19 @@ public class AddedDishItemView extends BorderPane{
             addedDishImage.setVisible(false);
         }
 
-        starterLabel.setText(dish.getName());
+        String label = "";
+        switch (dish.getType()) {
+            case Dish.STARTER:
+                label += STARTER;
+                break;
+            case Dish.MAIN:
+                label += MAIN;
+                break;
+            default:
+                label += DESSERT;
+        }
+        label += ": " + dish.getName();
+        dishLabel.setText(label);
         costAddedDishLabel.setText("$3.02");
     }
 }

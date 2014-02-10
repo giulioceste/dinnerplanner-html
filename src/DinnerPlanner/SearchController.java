@@ -5,10 +5,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.FlowPane;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
@@ -80,6 +77,25 @@ public class SearchController {
                     mouseEvent.consume();
                 }
             });
+
+            view.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    // On a double click of the primary mouse button open up a dish specific page.
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2){
+                        // TODO Open up DishView about this particular dish.
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * Class that handles double clicks on menu
+     */
+    private class DoubleClickEventHandler implements EventHandler<MouseEvent> {
+        @Override
+        public void handle(MouseEvent mouseEvent) {
 
         }
     }

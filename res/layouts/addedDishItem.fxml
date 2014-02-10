@@ -11,11 +11,7 @@
   <center>
     <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
       <children>
-        <Label fx:id="starterLabel" text="">
-          <graphic>
-            <Label fx:id="nameOfDish" text="Starter:" />
-          </graphic>
-        </Label>
+        <Label id="starterLabel" fx:id="dishLabel" text="" />
         <Label fx:id="costAddedDishLabel" text="">
           <graphic>
             <Label id="costLabel" text="Cost" />
