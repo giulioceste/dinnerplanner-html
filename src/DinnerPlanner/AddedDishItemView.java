@@ -9,6 +9,7 @@ import loader.ImageLoader;
 import loader.ViewLoader;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -45,6 +46,8 @@ public class AddedDishItemView extends BorderPane{
         assert costAddedDishLabel != null : "fx:id=\"costAddedDishLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
         assert nameOfDish != null : "fx:id=\"nameOfDish\" was not injected: check your FXML file 'addedDishItem.fxml'.";
         assert starterLabel != null : "fx:id=\"starterLabel\" was not injected: check your FXML file 'addedDishItem.fxml'.";
+
+
     }
 
     public AddedDishItemView(Dish dish)
@@ -54,7 +57,13 @@ public class AddedDishItemView extends BorderPane{
         }catch(Exception ex){
             throw new RuntimeException("Error loading the view DishPortfolioView.fxml");
         }
-        addedDishImage.setImage(ImageLoader.load(dish.getImage()));
+        try {
+            addedDishImage.setImage(ImageLoader.load(dish.getImage()));
+        } catch (FileNotFoundException e) {
+            addedDishImage.managedProperty().bind(addedDishImage.visibleProperty());
+            addedDishImage.setVisible(false);
+        }
+
         starterLabel.setText(dish.getName());
         costAddedDishLabel.setText("$3.02");
     }

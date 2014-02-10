@@ -25,13 +25,8 @@ public class SearchController {
 
     public SearchController(Collection<Dish> dishes) {
         if(dishes == null)
-        {
             throw new IllegalArgumentException("The dishes cannot be null!");
-        }
-        else
-        {
-            this.dishes = dishes;
-        }
+        this.dishes = dishes;
     }
 
     @FXML
@@ -67,9 +62,8 @@ public class SearchController {
         //make the flow pane strech in width with the scroll pane
         scrollPane.fitToWidthProperty().set(true);
         //adding every dish to the portfolio view.
-        for (Dish dish: dishes)
+        for (final Dish dish: dishes)
         {
-            final Dish d = dish;
             DishPortfolioView view = new DishPortfolioView(dish);
             dishFlowPane.getChildren().add(view);
             //we are enabling the drag and drop event.
@@ -81,7 +75,7 @@ public class SearchController {
                     Dragboard db = dishFlowPane.startDragAndDrop(TransferMode.ANY);
                     // temporarily placıng the dish name in the clipboard
                     ClipboardContent content = new ClipboardContent();
-                    content.putString(d.getName());
+                    content.putString(dish.getName());
                     db.setContent(content);
                     mouseEvent.consume();
                 }

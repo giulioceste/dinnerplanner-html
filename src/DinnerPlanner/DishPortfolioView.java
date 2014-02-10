@@ -8,6 +8,7 @@ import loader.ImageLoader;
 import loader.ViewLoader;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,8 +42,12 @@ public class DishPortfolioView extends BorderPane {
         }catch(Exception ex){
             throw new RuntimeException("Error loading the view DishPortfolioView.fxml");
         }
-
-        dishImage.setImage(ImageLoader.load(dish.getImage()));
-        dishNameLabel.setText(dish.getName());
+        try {
+            dishImage.setImage(ImageLoader.load(dish.getImage()));
+        } catch (FileNotFoundException e) {
+            dishImage.managedProperty().bind(dishImage.visibleProperty());
+            dishImage.setVisible(false);
+        }
+            dishNameLabel.setText(dish.getName());
     }
 }
