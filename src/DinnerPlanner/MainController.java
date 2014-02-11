@@ -1,5 +1,7 @@
 package DinnerPlanner;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -9,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -53,7 +54,7 @@ public class MainController implements DinnerModel.OnModelChangedListener {
     private Button incPeopleButton, ingButton, prepButton, decrPeopleButton;
 
     @FXML
-    private TextField numPeopleInputField;
+    private NonNegativeIntegerField numPeopleInputField;
 
     @FXML
     private Label totalCostLabel, dishNameLabel;
@@ -83,23 +84,40 @@ public class MainController implements DinnerModel.OnModelChangedListener {
 
     @FXML
     void onDecrementPeopleClicked(ActionEvent event) {
+        // TODO
+        int numPeople = Integer.valueOf(numPeopleInputField.getText().trim());
+        if (numPeople == 0) return; // Ignore if trying to set to negative people.
+        model.setNumberOfGuests(numPeople - 1);
     }
 
     @FXML
     void onIncrementPeopleClicked(ActionEvent event) {
+        // TODO
+        int numPeople = Integer.valueOf(numPeopleInputField.getText().trim());
+        model.setNumberOfGuests(numPeople + 1);
     }
 
     @FXML
     void onIngredientsClicked(ActionEvent event) {
         Stage stage = new Stage();
         stage.setTitle("Dinner Planner - Ingredients");
-        stage.setScene(new Scene(new IngredientsView(model, model.getFullMenu()), 600, 400));
+        BorderPane bp = new BorderPane();
+        final IngredientsView iView = new IngredientsView(model, model.getFullMenu());
+        bp.setCenter(iView);
+        stage.setScene(new Scene(bp, 600, 400));
         stage.show();
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                model.removeListener(iView);
+            }
+        });
     }
 
     @FXML
     void onNumPeopleChanged(ActionEvent event) {
-
+        model.setNumberOfGuests(Integer.valueOf(numPeopleInputField.getText().trim()));
     }
 
     @FXML
@@ -172,8 +190,29 @@ public class MainController implements DinnerModel.OnModelChangedListener {
         menuPanel.setFillWidth(true);
         dropDishBox.setFillWidth(true);
 
+        numPeopleInputField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                // If the old value is null then just go ahead and use the new value.
+                if (oldValue == null) return;
+
+                try {
+                    int newInt = Integer.valueOf(newValue);
+                    if (newInt >= 0) {
+                        numPeopleInputField.setText(newValue);
+                        model.setNumberOfGuests(newInt);
+                    }
+                } catch (NumberFormatException e) {
+                    numPeopleInputField.setText(oldValue);
+                }
+            }
+        });
+
         // Set the current price of the menu.
         updatePrice();
+
+        // Set the current number of people going to the event.
+        updateNumPeople();
     }
 
     /**
@@ -247,6 +286,14 @@ public class MainController implements DinnerModel.OnModelChangedListener {
     }
 
     /**
+     * Update the number of people going to the event.
+     * Called when the model is changed and class listens for changes in state.
+     */
+    private void updateNumPeople() {
+        numPeopleInputField.setText("" + model.getNumberOfGuests());
+    }
+
+    /**
      * Updates the buttons based on whether or not there are dishes in the menu.
      */
     private void updateButtons() {
@@ -278,7 +325,7 @@ public class MainController implements DinnerModel.OnModelChangedListener {
 
     @Override
     public void onNumberOfGuestChanged(int newAmount, int oldAmount) {
-
+          updateNumPeople();
     }
 
     /**

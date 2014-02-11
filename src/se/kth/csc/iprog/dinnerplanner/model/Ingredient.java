@@ -29,7 +29,6 @@ public class Ingredient {
     public String getName() {
         return name;
     }
-
     public double getQuantity() {
         return quantity;
     }
@@ -39,7 +38,6 @@ public class Ingredient {
     public String getUnit() {
         return unit;
     }
-
     public double getPrice() {
         return price;
     }
