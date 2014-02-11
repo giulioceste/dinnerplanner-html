@@ -52,3 +52,6 @@ out/production/DD2641_Lab2/se/kth/csc/iprog/dinnerplanner/model/IDinnerModel.cla
 out/production/DD2641_Lab2/se/kth/csc/iprog/dinnerplanner/model/Ingredient.class
 out/production/DD2641_Lab2/se/kth/csc/iprog/dinnerplanner/swing/DinnerPlanner.class
 out/production/DD2641_Lab2/se/kth/csc/iprog/dinnerplanner/swing/view/MainView.class
+out/production/DD2641_Lab2/DinnerPlanner/MainController$2.class
+out/production/DD2641_Lab2/DinnerPlanner/MainController$3.class
+out/production/DD2641_Lab2/DinnerPlanner/NonNegativeIntegerField.class
