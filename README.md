@@ -1,7 +1,7 @@
 DD2641_Lab2
 ===========
 
-#Abstract
+##Abstract
 
 Dinner Planner desktop application.  Application focuses on developing a conceptual understanding of model-view-controller
 design pattern.
