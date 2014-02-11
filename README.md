@@ -14,14 +14,19 @@ Group 26
 
 The project used Intellij as its IDE.  Sadly, the file structure and META data is directly dependent on intellij.  
 
-Importing the Project.
-- Using Intellij, importing the project is as simple as Import Project --> Select root directory of the project.  
+Importing the Project
+=====================
+
+Using Intellij, importing the project is as simple as Import Project --> Select root directory of the project.  
 
 Edit FXML Documents.
-- Manually via text editor
-- For UI based editor, Download Java FX Scene Builder and open files via that application.
+====================
+Manually via text editor
+For UI based editor, Download Java FX Scene Builder and open files via that application.
 
 Run the current build of application.
-- Run "java -jar DinnerPlanner.jar" in the project's root directory
+=====================================
+
+Run "java -jar DinnerPlanner.jar" in the project's root directory
 
 
