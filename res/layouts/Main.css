@@ -1,5 +1,10 @@
+.main-pane {
+    -fx-border-color: #474747;
+    -fx-border-insets: 1;
+}
+
 .label {
-    -fx-font: 16px "Serif";
+    -fx-font: 14px "Sans";
     /*-fx-background-color: #CCFF99;*/
 }
 
@@ -14,7 +19,7 @@
 }
 
 .dinner-header-label{
-    -fx-font: 24px "Serif";
+    -fx-font: 24px "Sans";
     -fx-spacing: 20;
     -fx-font-weight: bold;
     -fx-padding: 20;
