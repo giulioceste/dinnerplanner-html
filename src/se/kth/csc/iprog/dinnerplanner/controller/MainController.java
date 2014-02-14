@@ -365,7 +365,7 @@ public class MainController implements DinnerModel.OnModelChangedListener {
                 if (dragEvent.getGestureSource() != dragAndDropNewPane &&
                         dragEvent.getDragboard().hasString() && hasDishByName(
                         dragEvent.getDragboard().getString())) {
-                    dragDishLabel.setTextFill(Color.YELLOW);
+                    dragDishLabel.setTextFill(Color.GRAY);
                 }
             } else if (type.equals(DragEvent.DRAG_EXITED)) {
                 /* mouse moved away, remove the graphical cues */
