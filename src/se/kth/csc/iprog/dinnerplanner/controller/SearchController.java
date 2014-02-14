@@ -1,4 +1,4 @@
-package DinnerPlanner;
+package se.kth.csc.iprog.dinnerplanner.controller;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,6 +11,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
+import se.kth.csc.iprog.dinnerplanner.view.DishPortfolioView;
+import se.kth.csc.iprog.dinnerplanner.view.DishView;
 
 import java.net.URL;
 import java.util.Collection;

@@ -1,10 +1,12 @@
-package DinnerPlanner;
+package se.kth.csc.iprog.dinnerplanner;
 
+import se.kth.csc.iprog.dinnerplanner.controller.MainController;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
+import se.kth.csc.iprog.dinnerplanner.view.MainView;
 
 public class Main extends Application {
 

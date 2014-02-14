@@ -1,4 +1,4 @@
-package DinnerPlanner;
+package se.kth.csc.iprog.dinnerplanner.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
