@@ -1,14 +1,19 @@
 package se.kth.csc.iprog.dinnerplanner.model;
 
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.DoubleExpression;
+import javafx.beans.property.*;
+
 /**
  * Class that represents an ingredient for a specific dish.
  */
 public class Ingredient {
 
-    private final String name, unit;
-    double quantity;
-    private final double price;
-     // can be empty, for example in case of eggs (there is not unit)
+    private final StringProperty name, unit;
+    private DoubleProperty quantity;
+    private final DoubleProperty pricePerUnit;
+    private final DoubleBinding price;
+
 
     /**
      * Creates Ingredient class.
@@ -16,30 +21,83 @@ public class Ingredient {
      * @param name Name of the ingredient.
      * @param quantity Initial Quantity of this ingredient.
      * @param unit Unit of measurement
-     * @param price Price of the ingredient.
-     * // TODO: Change price to price per unit.  That way we can calculate price as qty changes.
+     * @param pricePerUnit Price per unit of the ingredient.
      */
-    public Ingredient(String name, double quantity, String unit, double price){
-        this.name = name;
-        this.quantity = quantity;
-        this.unit = unit;
-        this.price = price;
+    public Ingredient(String name, double quantity, String unit, double pricePerUnit){
+        this.name = new SimpleStringProperty(name);
+        this.quantity = new SimpleDoubleProperty(quantity);
+        this.unit = new SimpleStringProperty(unit);
+        this.pricePerUnit = new SimpleDoubleProperty(pricePerUnit);
+        price = this.quantity.multiply(this.pricePerUnit);
+    }
+
+    // Access to Property values observable binding.
+
+    /**
+     * @return The name property
+     */
+    public ReadOnlyStringProperty nameProperty() {
+        return name;
+    }
+
+    /**
+     * @return The Quantity Property.
+     */
+    public ReadOnlyDoubleProperty quantityProperty() {
+        return quantity;
+    }
+
+    /**
+     * @return The unit property
+     */
+    public ReadOnlyStringProperty unitProperty() {
+        return unit;
+    }
+
+    /**
+     * @return The pricePerUnit property.
+     */
+    public ReadOnlyDoubleProperty pricePerUnitProperty() {
+        return pricePerUnit;
+    }
+
+    /**
+     * @return The total price calculated from the quantity.
+     */
+    public DoubleExpression priceProperty() {
+        return price;
+    }
+
+    // Setters
+
+    /**
+     * Sets the number of units of this ingredient.
+     * @param quantity Quantity of the ingredient.
+     */
+    public void setQuantity(double quantity) {
+        this.quantity.set(quantity);
+    }
+
+    // Getters
+
+    public double getPricePerUnit() {
+        return pricePerUnit.get();
+    }
+
+    public double getQuantity() {
+        return quantity.get();
+    }
+
+    public String getUnit() {
+        return unit.get();
     }
 
     public String getName() {
-        return name;
+        return name.get();
     }
-    public double getQuantity() {
-        return quantity;
-    }
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
-    }
-    public String getUnit() {
-        return unit;
-    }
+
     public double getPrice() {
-        return price;
+        return price.get();
     }
 
     @Override
@@ -48,25 +106,27 @@ public class Ingredient {
         if (!(o instanceof Ingredient)) return false;
 
         Ingredient that = (Ingredient) o;
-
-        if (Double.compare(that.price, price) != 0) return false;
-        if (Double.compare(that.quantity, quantity) != 0) return false;
         if (!name.equals(that.name)) return false;
+        if (!pricePerUnit.equals(that.pricePerUnit)) return false;
         if (!unit.equals(that.unit)) return false;
-
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = name.hashCode();
+        int result = name.hashCode();
         result = 31 * result + unit.hashCode();
-        temp = Double.doubleToLongBits(quantity);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + pricePerUnit.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "pricePerUnit=" + pricePerUnit +
+                ", quantity=" + quantity +
+                ", unit=" + unit +
+                ", name=" + name +
+                '}';
     }
 }
