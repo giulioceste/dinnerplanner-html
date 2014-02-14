@@ -6,7 +6,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.BorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <center>
     <SplitPane fx:id="dishViewSplitPane" dividerPositions="0.5007518796992482" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
       <items>
@@ -20,9 +20,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
           </columnResizePolicy>
           <columns>
-            <TableColumn prefWidth="75.0" text="Ingredient" fx:id="columnIngredient" />
-            <TableColumn prefWidth="75.0" text="Quantity" fx:id="columnQuantity" />
-            <TableColumn prefWidth="75.0" text="Costs" fx:id="columnCosts" />
+            <TableColumn fx:id="columnIngredient" prefWidth="75.0" text="Ingredient" /><TableColumn fx:id="columnUnit" prefWidth="75.0" text="Unit" />
+            <TableColumn fx:id="columnQuantity" prefWidth="75.0" text="Quantity" /><TableColumn fx:id="columnPricePerUnit" prefWidth="75.0" text="Price per Unit" />
+            <TableColumn fx:id="columnPrice" prefWidth="75.0" text="Price" />
           </columns>
         </TableView>
       </items>
