@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import loader.ImageLoader;
 import loader.ViewLoader;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
@@ -24,6 +25,12 @@ public class DishView extends BorderPane {
 
     private final DinnerModel model;
     private final Dish selectedDish;
+
+    @FXML
+    private Pane panePreparation;
+
+    @FXML
+    private SplitPane dishViewSplitPane;
 
     @FXML
     private Label labelDishName;
@@ -79,7 +86,20 @@ public class DishView extends BorderPane {
             throw new RuntimeException("Can't load image " + selectedDish.getImage());
         }
 
+        initUI();
+
         displayTableData(selectedDish.getIngredients());
+
+    }
+
+    private void initUI() {
+
+        // text area should be smaller than the visible part in the split pane
+        panePreparation.prefWidthProperty().bind(dishViewSplitPane.widthProperty().multiply(dishViewSplitPane.getDividers().get(0).positionProperty()));
+        panePreparation.prefHeightProperty().bind(dishViewSplitPane.heightProperty());
+
+        textPreparation.prefWidthProperty().bind(panePreparation.widthProperty());
+        textPreparation.prefHeightProperty().bind(panePreparation.heightProperty());
 
     }
 

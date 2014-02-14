@@ -10,7 +10,7 @@
   <center>
     <SplitPane fx:id="dishViewSplitPane" dividerPositions="0.5007518796992482" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
       <items>
-        <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+        <Pane fx:id="panePreparation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
           <children>
             <TextArea fx:id="textPreparation" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="text-input, text-area, text-preparation" text="Preparation&#10;1. do this&#10;2. do that&#10;3. and finished&#10;4. enjoy" wrapText="true" />
           </children>
