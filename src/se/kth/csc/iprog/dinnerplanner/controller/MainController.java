@@ -77,6 +77,9 @@ public class MainController  {
     @FXML
     private BorderPane selectedDessertView, selectedMainView, selectedStarterVıew;
 
+    @FXML
+    private Pane dragAndDropNewPane;
+
     public MainController(DinnerModel model) {
         this.model = model;
 
@@ -165,6 +168,8 @@ public class MainController  {
         assert starterTab != null : "fx:id=\"starterTab\" was not injected: check your FXML file 'MainView.fxml'.";
         assert totalCostLabel != null : "fx:id=\"totalCostLabel\" was not injected: check your FXML file 'MainView.fxml'.";
         assert menuPanel != null : "fx:id=\"menuPanel\" was not injected: check your FXML file 'MainView.fxml'.";
+        assert dragAndDropNewPane != null : "fx:id=\"dragAndDropNewPane\" was not injected: check your FXML file 'MainView.fxml'.";
+
 
         setUpUI();
     }
@@ -186,10 +191,10 @@ public class MainController  {
 
         // Create a Drag event handler and add it to the correct pane for dropping menu items.
         DragEventHandler handler = new DragEventHandler();
-        dropDishBox.setOnDragOver(handler);
-        dropDishBox.setOnDragEntered(handler);
-        dropDishBox.setOnDragExited(handler);
-        dropDishBox.setOnDragDropped(handler);
+        dragAndDropNewPane.setOnDragOver(handler);
+        dragAndDropNewPane.setOnDragEntered(handler);
+        dragAndDropNewPane.setOnDragExited(handler);
+        dragAndDropNewPane.setOnDragDropped(handler);
 
         // Allow the vboc children to expand in width with the VBox.
         menuPanel.setFillWidth(true);
@@ -315,7 +320,7 @@ public class MainController  {
                 Only accept drops from nodes that are not thıs dısh box
                 and provıde a string with the same name as an existing dish
                  */
-                if (dragEvent.getGestureSource() != dropDishBox &&
+                if (dragEvent.getGestureSource() != dragAndDropNewPane &&
                         dragEvent.getDragboard().hasString() && hasDishByName(dragEvent.getDragboard().getString())) {
                     dragEvent.acceptTransferModes(TransferMode.ANY);
                 }
@@ -323,7 +328,7 @@ public class MainController  {
                 /**
                  * Only allow drag events with names of dishes that we have.
                  */
-                if (dragEvent.getGestureSource() != dropDishBox &&
+                if (dragEvent.getGestureSource() != dragAndDropNewPane &&
                         dragEvent.getDragboard().hasString() && hasDishByName(
                         dragEvent.getDragboard().getString())) {
                     dragDishLabel.setTextFill(Color.YELLOW);
