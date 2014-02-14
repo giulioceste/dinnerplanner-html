@@ -1,5 +1,11 @@
 package se.kth.csc.iprog.dinnerplanner.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import loader.ImageLoader;
 
@@ -11,20 +17,31 @@ public class Dish {
 
     public static final int STARTER = 1;
     public static final int MAIN = 2;
-    public static final int DESERT = 3;
+    public static final int DESSERT = 3;
 
-    private final String name;
-    private final int type; // starter (1), main (2) or desert (3)
-    private final String image;
-    private final String description;
-    private final Set<Ingredient> ingredients;
+    private final StringProperty name, image, description;
+    private final IntegerProperty type; // starter (1), main (2) or desert (3)
+    private final ObservableList<Ingredient> ingredients;
 
+    /**
+     * Creates a dish with standard
+     *
+     * @param name Name of the dish
+     * @param type Type of the dish
+     * @param image Image to associate to this dish.
+     * @param description Description about this dish.
+     */
     public Dish(String name, int type, String image, String description) {
+        // Name of the dish should be never be null.
         if (name == null)
             throw new IllegalArgumentException("Name of dish cannot be null");
+
+        // Safely assign the description of the dish.
         if (description == null) {
             description = "";
         }
+
+        // Make sure we have a correct type.
         if (!(type == 1 || type == 2 || type == 3))
             throw new IllegalArgumentException("Invalid type: " + type);
         try {
@@ -33,34 +50,59 @@ public class Dish {
             image = "no-image.png";
         }
 
-        this.name = name;
-        this.type = type;
-        this.image = image;
-        this.description = description;
-        ingredients = new HashSet<Ingredient>();
+        this.name = new SimpleStringProperty(name);
+        this.type = new SimpleIntegerProperty(type);
+        this.image = new SimpleStringProperty(image);
+        this.description = new SimpleStringProperty(description);
+        ingredients = FXCollections.observableArrayList();
     }
 
-    public String getName() {
+    // JavaFX Properties.
+    public StringProperty nameProperty() {
         return name;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public String getImage() {
+    public StringProperty imageProperty() {
         return image;
     }
 
-    public String getDescription() {
+    public StringProperty descriptionProperty() {
         return description;
+    }
+
+    public IntegerProperty typeProperty() {
+        return type;
+    }
+
+    public ObservableList<Ingredient> ingredientsPropert() {
+        return FXCollections.unmodifiableObservableList(ingredients);
+    }
+
+    // Standard Getters.
+
+    public String getName() {
+        return name.get();
+    }
+
+    public int getType() {
+        return type.get();
+    }
+
+    public String getImage() {
+        return image.get();
+    }
+
+    public String getDescription() {
+        return description.get();
     }
 
     public Set<Ingredient> getIngredients(){
         return new HashSet<Ingredient>(ingredients);
     }
 
+    // Mutators
     public void addIngredient(Ingredient ing){
+        if (ingredients.contains(ing)) return;
         ingredients.add(ing);
     }
 
@@ -69,7 +111,7 @@ public class Dish {
     }
 
     public boolean contains(String filter){
-        if(name.toLowerCase().contains(filter.toLowerCase())){
+        if(name.get().toLowerCase().contains(filter.toLowerCase())){
             return true;
         }
         for(Ingredient i : ingredients){
@@ -96,19 +138,21 @@ public class Dish {
         if (!(o instanceof Dish)) return false;
 
         Dish dish = (Dish) o;
-        if (type != dish.type) return false;
-        if (description != null ? !description.equals(dish.description) : dish.description != null) return false;
-        if (image != null ? !image.equals(dish.image) : dish.image != null) return false;
+        if (!description.equals(dish.description)) return false;
+        if (!image.equals(dish.image)) return false;
+        if (!ingredients.equals(dish.ingredients)) return false;
         if (!name.equals(dish.name)) return false;
+        if (!type.equals(dish.type)) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
         int result = name.hashCode();
-        result = 31 * result + type;
-        result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + image.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + ingredients.hashCode();
         return result;
     }
 }
