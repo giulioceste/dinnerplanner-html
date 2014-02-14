@@ -323,6 +323,7 @@ public class MainController  {
                 if (dragEvent.getGestureSource() != dragAndDropNewPane &&
                         dragEvent.getDragboard().hasString() && hasDishByName(dragEvent.getDragboard().getString())) {
                     dragEvent.acceptTransferModes(TransferMode.ANY);
+                    dragDishLabel.setTextFill(Color.ALICEBLUE);
                 }
             } else if (type.equals(DragEvent.DRAG_ENTERED)) {
                 /**
