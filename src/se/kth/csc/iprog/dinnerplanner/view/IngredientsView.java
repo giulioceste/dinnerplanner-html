@@ -1,5 +1,6 @@
-package DinnerPlanner;
+package se.kth.csc.iprog.dinnerplanner.view;
 
+import se.kth.csc.iprog.dinnerplanner.model.IngredientTableEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

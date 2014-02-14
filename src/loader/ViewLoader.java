@@ -16,13 +16,14 @@ public final class ViewLoader {
     /**
      * Loads an fxml document for a given view.
      *
-     * @param node The view class that is loading the fxml document
+     * @param root The view class that is loading the fxml document
      * @param fileName name of the file to upload
      * @param controller Controller class that has all internal members and implements all the callback methods.
-     * @throws IOException
+     * @throws IOException If there was an error accessing the FXML file.
      */
-    public static void load(Node node, String fileName, Object controller) throws IOException {
-        URL url = ViewLoader.class.getClassLoader().getResource("layouts/" + fileName);
+    public static void load(Node root, String fileName, Object controller) throws IOException {
+            URL url = ViewLoader.class.getClassLoader().getResource("layouts/" + fileName);
+
         if (url == null) {
             String error = "Unable to find view " + fileName;
             Logger.getGlobal().severe(error);
@@ -30,7 +31,7 @@ public final class ViewLoader {
         }
 
         FXMLLoader fxmlLoader = new FXMLLoader(url);
-        fxmlLoader.setRoot(node);
+        fxmlLoader.setRoot(root);
         fxmlLoader.setController(controller);
         try {
             fxmlLoader.load();
@@ -38,6 +39,17 @@ public final class ViewLoader {
             Logger.getGlobal().severe("Unable to load view " + fileName + " due to " + exception.getMessage());
             throw new RuntimeException(exception);
         }
+    }
+
+    /**
+     * Loads an FXML Document for a given view.  Sets the node as the root and
+     * the controller.
+     *
+     * @param rootAndController Root and Controller of the view.
+     * @param fileName Name of file to load.
+     */
+    public static void load(Node rootAndController, String fileName) throws IOException {
+        load(rootAndController, fileName, rootAndController);
     }
 
 }

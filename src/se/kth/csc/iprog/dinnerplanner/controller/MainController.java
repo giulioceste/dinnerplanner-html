@@ -1,4 +1,4 @@
-package DinnerPlanner;
+package se.kth.csc.iprog.dinnerplanner.controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
+import se.kth.csc.iprog.dinnerplanner.view.*;
 
 import java.net.URL;
 import java.text.NumberFormat;
@@ -263,7 +264,8 @@ public class MainController implements DinnerModel.OnModelChangedListener {
         }
         view.getChildren().clear();
         view.setVisible(false);
-        /// Update price
+
+        // Update price
         updatePrice();
 
         // Update Buttons

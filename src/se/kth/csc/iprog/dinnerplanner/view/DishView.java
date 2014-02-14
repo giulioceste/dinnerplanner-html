@@ -1,16 +1,13 @@
-package DinnerPlanner;
+package se.kth.csc.iprog.dinnerplanner.view;
 
+import se.kth.csc.iprog.dinnerplanner.model.IngredientTableEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import loader.ImageLoader;
 import loader.ViewLoader;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
@@ -18,9 +15,7 @@ import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 import java.io.IOException;
-import java.net.URI;
 import java.text.DecimalFormat;
-import java.util.HashSet;
 import java.util.Set;
 
 /**

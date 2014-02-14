@@ -1,4 +1,4 @@
-package DinnerPlanner;
+package se.kth.csc.iprog.dinnerplanner.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
