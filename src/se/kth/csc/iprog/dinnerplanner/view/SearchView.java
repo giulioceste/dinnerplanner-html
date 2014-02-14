@@ -1,5 +1,6 @@
-package DinnerPlanner;
+package se.kth.csc.iprog.dinnerplanner.view;
 
+import se.kth.csc.iprog.dinnerplanner.controller.SearchController;
 import javafx.scene.layout.BorderPane;
 import loader.ViewLoader;
 

@@ -1,8 +1,7 @@
-package DinnerPlanner;
+package se.kth.csc.iprog.dinnerplanner.model;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
-import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 /**
  * Created by sandstroh on 2/8/14.
