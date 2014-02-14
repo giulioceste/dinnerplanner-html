@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -21,7 +22,10 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
-import se.kth.csc.iprog.dinnerplanner.view.*;
+import se.kth.csc.iprog.dinnerplanner.view.AddedDishItemView;
+import se.kth.csc.iprog.dinnerplanner.view.FullMenuView;
+import se.kth.csc.iprog.dinnerplanner.view.IngredientsView;
+import se.kth.csc.iprog.dinnerplanner.view.SearchView;
 
 import java.net.URL;
 import java.text.NumberFormat;
@@ -55,7 +59,7 @@ public class MainController implements DinnerModel.OnModelChangedListener {
     private Button incPeopleButton, ingButton, prepButton, decrPeopleButton;
 
     @FXML
-    private NonNegativeIntegerField numPeopleInputField;
+    private TextField numPeopleInputField;
 
     @FXML
     private Label totalCostLabel, dishNameLabel;
