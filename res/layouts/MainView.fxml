@@ -8,99 +8,107 @@
 <?import javafx.scene.layout.*?>
 
 <fx:root type="javafx.scene.layout.BorderPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <bottom>
+    <SplitPane dividerPositions="" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
+  </bottom>
   <center>
-    <SplitPane dividerPositions="0.6293929712460063" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="-1.0">
-      <items>
-        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" rotateGraphic="false" tabClosingPolicy="UNAVAILABLE">
-          <tabs>
-            <Tab fx:id="starterTab" text="Start">
-              <content>
-                <Pane id="dishPane" fx:id="dishListPane" maxHeight="1.7976931348623157E308" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0">
-                  <children>
-                    <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
-                    <GridPane fx:id="gridPane" maxHeight="1.7976931348623157E308" maxWidth="-1.0">
-                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      </columnConstraints>
-                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      </rowConstraints>
-                    </GridPane>
-                  </children>
-                </Pane>
-              </content>
-            </Tab>
-            <Tab fx:id="mainTab" text="Main">
-              <content>
-                <FlowPane fx:id="mainFlowPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
-              </content>
-            </Tab>
-            <Tab fx:id="dessertTab" content="$null" text="Dessert" />
-          </tabs>
-        </TabPane>
-        <VBox fx:id="menuPanel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
-          <children>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+    <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" rotateGraphic="false" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab fx:id="starterTab" text="Start">
+          <content>
+            <Pane id="dishPane" fx:id="dishListPane" maxHeight="1.7976931348623157E308" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0">
               <children>
-                <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" text="Number of People" textOverrun="CLIP" HBox.hgrow="SOMETIMES" />
-                <TextField fx:id="numPeopleInputField" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" onAction="#onNumPeopleChanged" prefColumnCount="4" prefWidth="-1.0" HBox.hgrow="NEVER" />
-                <VBox prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER">
-                  <children>
-                    <Button fx:id="incPeopleButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onIncrementPeopleClicked" text="+" />
-                    <Button fx:id="decrPeopleButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDecrementPeopleClicked" prefWidth="29.0" text="-" />
-                  </children>
-                </VBox>
+                <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
+                <GridPane fx:id="gridPane" maxHeight="1.7976931348623157E308" maxWidth="-1.0">
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0">
-              <children>
-                <Label fx:id="totalCostLabel" contentDisplay="LEFT" text="\$ 0.00">
-                  <graphic>
-                    <Label id="totalCostLabel" text="Total Cost:" />
-                  </graphic>
-                </Label>
-              </children>
-            </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0">
-              <children>
-                <Label alignment="CENTER" text="Dinner Menu" />
-              </children>
-            </HBox>
-            <Pane fx:id="dragAndDropNewPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" styleClass="menu-pane">
-              <children>
-                <VBox fx:id="dropDishBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
-                  <children>
-                    <BorderPane fx:id="selectedStarterVıew" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
-                    <BorderPane id="selectedStarterVıew" fx:id="selectedMainView" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
-                    <BorderPane fx:id="selectedDessertView" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
-                    <Label fx:id="dragDishLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Drag your dish to the menu" />
-                  </children>
-                </VBox>
-              </children>
-              <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-              </padding>
-              <stylesheets>
-                <URL value="@Main.css" />
-              </stylesheets>
-              <VBox.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-              </VBox.margin>
             </Pane>
-            <HBox alignment="BOTTOM_CENTER" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="SOMETIMES">
+          </content>
+        </Tab>
+        <Tab fx:id="mainTab" text="Main">
+          <content>
+            <FlowPane fx:id="mainFlowPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" />
+          </content>
+        </Tab>
+        <Tab fx:id="dessertTab" content="$null" text="Dessert" />
+      </tabs>
+    </TabPane>
+  </center>
+  <right>
+    <VBox fx:id="menuPanel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="400.0" styleClass="menu-panel-box">
+      <children>
+        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+          <children>
+            <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" text="Number of People" textOverrun="CLIP" HBox.hgrow="SOMETIMES" />
+            <TextField fx:id="numPeopleInputField" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" onAction="#onNumPeopleChanged" prefColumnCount="4" prefWidth="-1.0" HBox.hgrow="NEVER" />
+            <VBox prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="NEVER">
               <children>
-                <Button fx:id="prepButton" mnemonicParsing="false" onAction="#onPreparationClicked" prefHeight="-1.0" prefWidth="-1.0" text="Preparation" />
-                <Button id="ingrButton" fx:id="ingButton" mnemonicParsing="false" onAction="#onIngredientsClicked" prefHeight="-1.0" prefWidth="-1.0" text="Ingredients" />
+                <Button fx:id="incPeopleButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onIncrementPeopleClicked" text="+" />
+                <Button fx:id="decrPeopleButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDecrementPeopleClicked" prefWidth="29.0" text="-" />
+              </children>
+            </VBox>
+          </children>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0">
+          <children>
+            <Label fx:id="totalCostLabel" contentDisplay="LEFT" text="\$ 0.00">
+              <graphic>
+                <Label id="totalCostLabel" text="Total Cost:" />
+              </graphic>
+            </Label>
+          </children>
+        </HBox>
+        <HBox alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0">
+          <children>
+            <Label alignment="CENTER" text="Dinner Menu" />
+          </children>
+        </HBox>
+        <Pane fx:id="dragAndDropNewPane" maxHeight="-1.0" maxWidth="1.7976931348623157E308" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" styleClass="menu-pane" VBox.vgrow="SOMETIMES">
+          <children>
+            <VBox fx:id="dropDishBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+              <children>
+                <BorderPane fx:id="selectedStarterVıew" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
+                <BorderPane id="selectedStarterVıew" fx:id="selectedMainView" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
+                <BorderPane fx:id="selectedDessertView" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" styleClass="dishitem-pane" visible="false" />
+              </children>
+            </VBox>
+            <HBox alignment="CENTER" layoutX="17.0" layoutY="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0">
+              <children>
+                <Label fx:id="dragDishLabel" alignment="TOP_RIGHT" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" text="Drag your dish to the menu" />
               </children>
             </HBox>
           </children>
-        </VBox>
-      </items>
-    </SplitPane>
-  </center>
+          <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+          </padding>
+          <stylesheets>
+            <URL value="@Main.css" />
+          </stylesheets>
+          <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </VBox.margin>
+        </Pane>
+        <HBox alignment="BOTTOM_CENTER" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="SOMETIMES">
+          <children>
+            <Button fx:id="prepButton" mnemonicParsing="false" onAction="#onPreparationClicked" prefHeight="-1.0" prefWidth="-1.0" text="Preparation" />
+            <Button id="ingrButton" fx:id="ingButton" mnemonicParsing="false" onAction="#onIngredientsClicked" prefHeight="-1.0" prefWidth="-1.0" text="Ingredients" />
+          </children>
+        </HBox>
+      </children>
+      <stylesheets>
+        <URL value="@Main.css" />
+      </stylesheets>
+    </VBox>
+  </right>
   <stylesheets>
     <URL value="@Base.css" />
     <URL value="@Main.css" />

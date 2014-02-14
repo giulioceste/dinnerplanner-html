@@ -357,6 +357,7 @@ public class MainController implements DinnerModel.OnModelChangedListener {
                 if (dragEvent.getGestureSource() != dragAndDropNewPane &&
                         dragEvent.getDragboard().hasString() && hasDishByName(dragEvent.getDragboard().getString())) {
                     dragEvent.acceptTransferModes(TransferMode.ANY);
+                    dragDishLabel.setTextFill(Color.ALICEBLUE);
                 }
             } else if (type.equals(DragEvent.DRAG_ENTERED)) {
                 /**
