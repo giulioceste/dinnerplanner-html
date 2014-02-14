@@ -27,4 +27,5 @@ public class ImageLoader {
         }
         return new Image(stream);
     }
+
 }

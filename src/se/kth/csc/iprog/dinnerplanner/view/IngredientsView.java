@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * Created by sandstroh on 2/8/14.
  */
-public class IngredientsView extends Pane implements DinnerModel.OnModelChangedListener {
+public class IngredientsView extends Pane {
 
     private final DinnerModel model;
     private final Set<Dish> dishes;
@@ -81,18 +81,4 @@ public class IngredientsView extends Pane implements DinnerModel.OnModelChangedL
 
     }
 
-    @Override
-    public void onDishAdded(Dish added) {
-        // TODO
-    }
-
-    @Override
-    public void onDishRemoved(Dish removed) {
-        // TODO If the dish was removed then
-    }
-
-    @Override
-    public void onNumberOfGuestChanged(int newAmount, int oldAmount) {
-        // Nothing to do.
-    }
 }

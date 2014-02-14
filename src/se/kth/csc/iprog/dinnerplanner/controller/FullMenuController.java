@@ -1,5 +1,6 @@
 package se.kth.csc.iprog.dinnerplanner.controller;
 
+import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -7,13 +8,14 @@ import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 /**
  * Created by Giulio on 08/02/14.
  */
-public class FullMenuController implements DinnerModel.OnModelChangedListener {
+public class FullMenuController {
 
     private final DinnerModel model;
 
@@ -41,9 +43,13 @@ public class FullMenuController implements DinnerModel.OnModelChangedListener {
     @FXML
     private Label starterLabel;
 
+    private final Map<Integer, Label> labels;
+    private final Map<Integer, TextArea> areas;
+
     public FullMenuController(DinnerModel model) {
         this.model = model;
-        model.addListener(this);
+        labels = new HashMap<Integer, Label>();
+        areas = new HashMap<Integer, TextArea>();
     }
 
     @FXML
@@ -54,72 +60,66 @@ public class FullMenuController implements DinnerModel.OnModelChangedListener {
         assert mainLabel != null : "fx:id=\"mainLabel\" was not injected: check your FXML file 'PreparationView.fxml'.";
         assert starterArea != null : "fx:id=\"starterArea\" was not injected: check your FXML file 'PreparationView.fxml'.";
         assert starterLabel != null : "fx:id=\"starterLabel\" was not injected: check your FXML file 'PreparationView.fxml'.";
+
+        labels.put(Dish.STARTER, starterLabel);
+        labels.put(Dish.MAIN, mainLabel);
+        labels.put(Dish.DESSERT, dessertLabel);
+
+        areas.put(Dish.STARTER, starterArea);
+        areas.put(Dish.MAIN, mainArea);
+        areas.put(Dish.DESSERT, dessertArea);
+
         setupUI();
     }
 
     private void setupUI() {
-        // Make sure when elements dissapears the layout resizes.
-        dessertLabel.managedProperty().bind(dessertLabel.visibleProperty());
-        dessertArea.managedProperty().bind(dessertArea.visibleProperty());
-        mainLabel.managedProperty().bind(mainLabel.visibleProperty());
-        mainArea.managedProperty().bind(mainArea.visibleProperty());
-        starterLabel.managedProperty().bind(starterLabel.visibleProperty());
-        starterArea.managedProperty().bind(starterArea.visibleProperty());
 
-        // Bind the visibility of the label to the text.
-        // So when the text area disappears and reappears so does the label.
-        dessertLabel.visibleProperty().bind(dessertArea.visibleProperty());
-        mainLabel.visibleProperty().bind(mainArea.visibleProperty());
-        starterLabel.visibleProperty().bind(starterArea.visibleProperty());
-
-        updateView();
-    }
-
-    /**
-     * Updates the UI based on the model.
-     */
-    private void updateView() {
-
-        starterArea.setVisible(false);
-        mainArea.setVisible(false);
-        dessertArea.setVisible(false);
-
-        // iterate through all three dishes and populate the view.
+        // initially set up the with the dished currently in the menu.
         for (Dish dish: model.getFullMenu()) {
-            switch (dish.getType()) {
-                case Dish.STARTER:
-                    starterLabel.setText("Starter: " + dish.getName());
-                    starterArea.setText(dish.getDescription());
-                    starterArea.setVisible(true);
-                    break;
-                case Dish.MAIN:
-                    mainLabel.setText("Main: " + dish.getName());
-                    mainArea.setText(dish.getDescription());
-                    mainArea.setVisible(true);
-                    break;
-                case Dish.DESERT:
-                    dessertLabel.setText("Dessert: " + dish.getName());
-                    dessertArea.setText(dish.getDescription());
-                    dessertArea.setVisible(true);
-                    break;
-                default:
-                    Logger.getGlobal().warning("Illegal Dish type " + dish.getType());
-            }
+            if (dish == null) continue;
+            addDish(dish);
         }
+
+        // Every time a dish is added to or removed from the model
+        // then update the view.
+        model.getSelectedDishes().addListener(new MapChangeListener<Integer, Dish>() {
+            @Override
+            public void onChanged(Change<? extends Integer, ? extends Dish> change) {
+                if (change.wasAdded()) {
+                    Dish added = change.getValueAdded();
+                    if (added == null) return;
+                    addDish(added);
+                } else if (change.wasRemoved()) {
+                    Dish removed = change.getValueRemoved();
+                    if (removed == null) return;
+                    hideTextByType(removed.getType());
+                }
+            }
+        });
     }
 
-    @Override
-    public void onDishAdded(Dish added) {
-        updateView();
+    private void addDish(Dish dish) {
+        assert dish != null;
+        setUpText(labels.get(dish.getType()), areas.get(dish.getType()), dish);
     }
 
-    @Override
-    public void onDishRemoved(Dish removed) {
-        updateView();
+    private void hideTextByType(int type) {
+        areas.get(type).setVisible(false);
     }
 
-    @Override
-    public void onNumberOfGuestChanged(int newAmount, int oldAmount) {
-        // Nothing to do for this view.
+    private static void setUpText(Label label, TextArea area, Dish d) {
+        // Shouldnt have null fields
+        assert label != null && area != null && d != null;
+
+        // If any view becomes invisible then exclude it from the layout.
+        label.managedProperty().bind(label.visibleProperty());
+        area.managedProperty().bind(area.visibleProperty());
+
+        // Area visibility implies label visibility.
+        label.visibleProperty().bindBidirectional(area.visibleProperty());
+
+        // Bind the actual text to the dish element.
+        label.textProperty().bind(d.nameProperty());
+        area.textProperty().bind(d.descriptionProperty());
     }
 }

@@ -1,7 +1,6 @@
 package se.kth.csc.iprog.dinnerplanner.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -19,7 +18,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.view.AddedDishItemView;
@@ -34,7 +32,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 
-public class MainController implements DinnerModel.OnModelChangedListener {
+public class MainController  {
 
     private final DinnerModel model;
 
@@ -84,17 +82,19 @@ public class MainController implements DinnerModel.OnModelChangedListener {
 
     public MainController(DinnerModel model) {
         this.model = model;
+
+        // Initialize the controllers for the three
+        // different type of dishes and their respective search views.
         starterDishController = new SearchController(model.getDishesOfType(1));
         mainDishController = new SearchController(model.getDishesOfType(2));
         dessertController = new SearchController(model.getDishesOfType(3));
-        model.addListener(this);
     }
 
     @FXML
     void onDecrementPeopleClicked(ActionEvent event) {
         // TODO
         int numPeople = Integer.valueOf(numPeopleInputField.getText().trim());
-        if (numPeople == 0) return; // Ignore if trying to set to negative people.
+        if (numPeople == 1) return; // Ignore if trying to set to negative people.
         model.setNumberOfGuests(numPeople - 1);
     }
 
@@ -112,15 +112,15 @@ public class MainController implements DinnerModel.OnModelChangedListener {
         BorderPane bp = new BorderPane();
         final IngredientsView iView = new IngredientsView(model, model.getFullMenu());
         bp.setCenter(iView);
-        stage.setScene(new Scene(bp, 600, 400));
+        stage.setScene(new Scene(bp, 800, 600));
         stage.show();
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent windowEvent) {
-                model.removeListener(iView);
-            }
-        });
+//        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//            @Override
+//            public void handle(WindowEvent windowEvent) {
+//                model.removeListener(iView);
+//            }
+//        });
     }
 
     @FXML
@@ -138,13 +138,13 @@ public class MainController implements DinnerModel.OnModelChangedListener {
         final FullMenuController controller = new FullMenuController(model);
         stage.setScene(new Scene(new FullMenuView(controller), 600, 400));
 
-        // When the new stage closes remove the controller from the model.
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent windowEvent) {
-                model.removeListener(controller);
-            }
-        });
+//        // When the new stage closes remove the controller from the model.
+//        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//            @Override
+//            public void handle(WindowEvent windowEvent) {
+//                model.removeListener(controller);
+//            }
+//        });
         stage.show();
     }
 
@@ -200,29 +200,29 @@ public class MainController implements DinnerModel.OnModelChangedListener {
         menuPanel.setFillWidth(true);
         dropDishBox.setFillWidth(true);
 
-        numPeopleInputField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                // If the old value is null then just go ahead and use the new value.
-                if (oldValue == null) return;
-
-                try {
-                    int newInt = Integer.valueOf(newValue);
-                    if (newInt >= 0) {
-                        numPeopleInputField.setText(newValue);
-                        model.setNumberOfGuests(newInt);
-                    }
-                } catch (NumberFormatException e) {
-                    numPeopleInputField.setText(oldValue);
-                }
-            }
-        });
+        // For simplicity reasons don't allow users to edit manually.
+        numPeopleInputField.editableProperty().set(false);
+        // Bind the number of guest to the textfield.
+        numPeopleInputField.textProperty().bind(model.numberOfGuestsProperty().asString());
 
         // Set the current price of the menu.
         updatePrice();
 
-        // Set the current number of people going to the event.
-        updateNumPeople();
+        model.getSelectedDishes().addListener(new MapChangeListener<Integer, Dish>() {
+            @Override
+            public void onChanged(Change<? extends Integer, ? extends Dish> change) {
+                if (change.wasAdded()) {
+                    addDishToSelected(change.getValueAdded());
+                } else if (change.wasRemoved()) {
+                    removeDishFromSelected(change.getValueRemoved());
+                }
+                // Update the price
+                updatePrice();
+
+                // Update Buttons
+                updateButtons();
+            }
+        });
     }
 
     /**
@@ -249,12 +249,6 @@ public class MainController implements DinnerModel.OnModelChangedListener {
         view.getChildren().clear();
         view.setCenter(new AddedDishItemView(model, dish));
         view.setVisible(true);
-
-        // Update the price
-        updatePrice();
-
-        // Update Buttons
-        updateButtons();
     }
 
     private void removeDishFromSelected(Dish dish) {
@@ -273,12 +267,6 @@ public class MainController implements DinnerModel.OnModelChangedListener {
         }
         view.getChildren().clear();
         view.setVisible(false);
-
-        // Update price
-        updatePrice();
-
-        // Update Buttons
-        updateButtons();
     }
 
     /**
@@ -287,6 +275,7 @@ public class MainController implements DinnerModel.OnModelChangedListener {
     private void updatePrice() {
         double cost = 0;
         for (Dish dish: model.getFullMenu()) {
+            if (dish == null) continue;
             cost += dish.getPrice();
         }
         Locale locale = Locale.getDefault();
@@ -294,14 +283,6 @@ public class MainController implements DinnerModel.OnModelChangedListener {
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
         String costStr = currencyFormatter.format(cost) + " " + currentCurrency.getDisplayName();
         totalCostLabel.setText(costStr);
-    }
-
-    /**
-     * Update the number of people going to the event.
-     * Called when the model is changed and class listens for changes in state.
-     */
-    private void updateNumPeople() {
-        numPeopleInputField.setText("" + model.getNumberOfGuests());
     }
 
     /**
@@ -322,21 +303,6 @@ public class MainController implements DinnerModel.OnModelChangedListener {
 
     private boolean hasDishByName(String name) {
         return getDishByName(name) != null;
-    }
-
-    @Override
-    public void onDishAdded(Dish added) {
-        addDishToSelected(added);
-    }
-
-    @Override
-    public void onDishRemoved(Dish removed) {
-        removeDishFromSelected(removed);
-    }
-
-    @Override
-    public void onNumberOfGuestChanged(int newAmount, int oldAmount) {
-          updateNumPeople();
     }
 
     /**
