@@ -1,9 +1,7 @@
 package se.kth.csc.iprog.dinnerplanner.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -22,6 +20,7 @@ public class Dish {
     private final StringProperty name, image, description;
     private final IntegerProperty type; // starter (1), main (2) or desert (3)
     private final ObservableList<Ingredient> ingredients;
+    private DoubleProperty price;
 
     /**
      * Creates a dish with standard
@@ -78,6 +77,35 @@ public class Dish {
         return FXCollections.unmodifiableObservableList(ingredients);
     }
 
+    /**
+     * @return the price property.
+     */
+    public DoubleProperty priceProperty() {
+        if (price == null)
+            price = new SimpleDoubleProperty(0.0);
+
+        // Create price binding.
+        DoubleBinding db = new DoubleBinding() {
+
+            {
+                super.bind(ingredients);
+            }
+
+            @Override
+            protected double computeValue() {
+                double price = 0.0;
+                for (Ingredient ingredient : ingredients) {
+                    price += ingredient.getPrice();
+                }
+                return price;
+            }
+        };
+
+        // Do the binding
+        price.bind(db);
+        return price;
+    }
+
     // Standard Getters.
 
     public String getName() {
@@ -100,8 +128,13 @@ public class Dish {
         return new HashSet<Ingredient>(ingredients);
     }
 
+    public double getPrice() {
+        return priceProperty().get();
+    }
+
     // Mutators
     public void addIngredient(Ingredient ing){
+        if (ing == null) return;
         if (ingredients.contains(ing)) return;
         ingredients.add(ing);
     }
@@ -111,25 +144,13 @@ public class Dish {
     }
 
     public boolean contains(String filter){
-        if(name.get().toLowerCase().contains(filter.toLowerCase())){
-            return true;
-        }
-        for(Ingredient i : ingredients){
-            if(i.getName().toLowerCase().contains(filter.toLowerCase())){
+        if (name.get().toLowerCase().contains(filter.toLowerCase())) return true;
+        for (Ingredient i : ingredients) {
+            if (i.getName().toLowerCase().contains(filter.toLowerCase())) {
                 return true;
             }
         }
         return false;
-    }
-
-    public double getPrice()
-    {
-        double count = 0;
-        for(Ingredient i: ingredients)
-        {
-            count += i.getPrice();
-        }
-        return count;
     }
 
     @Override

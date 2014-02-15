@@ -1,5 +1,7 @@
 package se.kth.csc.iprog.dinnerplanner.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -223,6 +225,13 @@ public class MainController  {
                 updateButtons();
             }
         });
+
+        model.numberOfGuestsProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                updatePrice();
+            }
+        });
     }
 
     /**
@@ -278,11 +287,13 @@ public class MainController  {
             if (dish == null) continue;
             cost += dish.getPrice();
         }
+        cost = cost * model.getNumberOfGuests();
         Locale locale = Locale.getDefault();
         Currency currentCurrency = Currency.getInstance(locale);
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
         String costStr = currencyFormatter.format(cost) + " " + currentCurrency.getDisplayName();
         totalCostLabel.setText(costStr);
+
     }
 
     /**
