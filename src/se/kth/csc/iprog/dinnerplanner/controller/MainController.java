@@ -112,17 +112,10 @@ public class MainController  {
         Stage stage = new Stage();
         stage.setTitle("Dinner Planner - Ingredients");
         BorderPane bp = new BorderPane();
-        final IngredientsView iView = new IngredientsView(model, model.getFullMenu());
+        final IngredientsView iView = new IngredientsView(model.getFullMenu());
         bp.setCenter(iView);
         stage.setScene(new Scene(bp, 800, 600));
         stage.show();
-
-//        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-//            @Override
-//            public void handle(WindowEvent windowEvent) {
-//                model.removeListener(iView);
-//            }
-//        });
     }
 
     @FXML
@@ -139,14 +132,6 @@ public class MainController  {
         // Create a reference to the controller.
         final FullMenuController controller = new FullMenuController(model);
         stage.setScene(new Scene(new FullMenuView(controller), 600, 400));
-
-//        // When the new stage closes remove the controller from the model.
-//        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-//            @Override
-//            public void handle(WindowEvent windowEvent) {
-//                model.removeListener(controller);
-//            }
-//        });
         stage.show();
     }
 
@@ -210,6 +195,9 @@ public class MainController  {
         // Set the current price of the menu.
         updatePrice();
 
+        // Update Buttons
+        updateButtons();
+
         model.getSelectedDishes().addListener(new MapChangeListener<Integer, Dish>() {
             @Override
             public void onChanged(Change<? extends Integer, ? extends Dish> change) {
@@ -220,7 +208,6 @@ public class MainController  {
                 }
                 // Update the price
                 updatePrice();
-
                 // Update Buttons
                 updateButtons();
             }

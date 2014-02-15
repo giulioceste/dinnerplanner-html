@@ -2,18 +2,19 @@ package se.kth.csc.iprog.dinnerplanner.view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import loader.ViewLoader;
-import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,7 +22,7 @@ import java.util.Set;
  */
 public class IngredientsView extends Pane {
 
-    private final DinnerModel model;
+    private final Set<Dish> dishes;
 
     @FXML
     private Pane paneContainer;
@@ -44,22 +45,17 @@ public class IngredientsView extends Pane {
     @FXML
     private TableColumn columnPrice;
 
-
-    // TODO: remove 2nd argument (it's not necessary)
-    public IngredientsView(DinnerModel model, Set<Dish> dishes) {
-
+    public IngredientsView(Set<Dish> dishes) {
         try {
             ViewLoader.load(this, "IngredientsView.fxml", this);
         } catch (IOException e) {
             throw new RuntimeException("Can't find view " + "IngredientsView.fxml");
         }
+        this.dishes = new HashSet<Dish>(dishes);
 
-        this.model = model;
-
+        // Set all the property values of the UI.
         initUI();
-
-        displayData(model.getFullMenu());
-
+        displayData();
     }
 
 
@@ -80,15 +76,32 @@ public class IngredientsView extends Pane {
         columnUnit.setCellValueFactory(new PropertyValueFactory<Ingredient, Double>("unit"));
         columnQuantity.setCellValueFactory(new PropertyValueFactory<Ingredient, Double>("quantity"));
         columnPricePerUnit.setCellValueFactory(new PropertyValueFactory<Ingredient, Double>("pricePerUnit"));
-//        columnPrice.setCellValueFactory(new PropertyValueFactory<Ingredient, Double>("price"));
+        columnPrice.setCellValueFactory(new PropertyValueFactory<Ingredient, Double>("price"));
 
+        //
+        columnQuantity.setEditable(true);
+        columnQuantity.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Ingredient, Double>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Ingredient, Double> cellEditEvent) {
+                Double amount = cellEditEvent.getNewValue();
+                Double oldAmount = cellEditEvent.getOldValue();
+                // Check if the amount is valid.
+                if (amount == null) {
+                    // TODO figure out how to cancel.
+                    return;
+                }
+
+                // Update the quantity.
+                Ingredient ingredient = cellEditEvent.getRowValue();
+                ingredient.setQuantity(amount);
+            }
+        });
     }
 
     /**
      * Display the ingredients of the given dishes.
-     * @param dishes
      */
-    private void displayData(Set<Dish> dishes) {
+    private void displayData() {
 
         // merge ingredients
         HashMap<String, Ingredient> allIngredients = new HashMap<String, Ingredient>();
@@ -115,7 +128,6 @@ public class IngredientsView extends Pane {
         }
 
         tableIngredients.setItems(ingredients);
-
     }
 
     @FXML

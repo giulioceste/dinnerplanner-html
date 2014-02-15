@@ -8,8 +8,7 @@ import javafx.beans.property.*;
 public class Ingredient {
 
     private final StringProperty name, unit;
-    private DoubleProperty quantity;
-    private final DoubleProperty pricePerUnit, price;
+    private final DoubleProperty quantity, pricePerUnit, price;
 
     /**
      * Creates Ingredient class.
@@ -72,6 +71,7 @@ public class Ingredient {
      * @param quantity Quantity of the ingredient.
      */
     public void setQuantity(double quantity) {
+        if (quantity <= 0) return;
         this.quantity.set(quantity);
     }
 
