@@ -1,5 +1,7 @@
 package se.kth.csc.iprog.dinnerplanner.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,7 +18,9 @@ import se.kth.csc.iprog.dinnerplanner.view.DishView;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * Created by halitanil on 08.02.2014.
@@ -48,7 +52,7 @@ public class SearchController {
 
     @FXML
     void onSearch(ActionEvent event) {
-
+        // TODO not used because.
     }
 
     @FXML
@@ -62,13 +66,55 @@ public class SearchController {
     private void setupUI() {
         //make the flow pane strech in width with the scroll pane
         scrollPane.fitToWidthProperty().set(true);
-        //adding every dish to the portfolio view.
-        dishFlowPane.getStyleClass().add("/layouts/Main.css");
-        scrollPane.getStyleClass().add("/layouts/Main.css");
-        for (final Dish dish: dishes)
-        {
+//        //adding every dish to the portfolio view.
+//        dishFlowPane.getStyleClass().add("/layouts/Main.css");
+//        scrollPane.getStyleClass().add("/layouts/Main.css");
+
+        // Apply filter to the search box.
+        searchBox.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue,
+                                String oldValue, String newValue) {
+                if (newValue == null)
+                    newValue = "";
+                newValue = newValue.trim();
+                filterDishesOfType(newValue);
+            }
+        });
+
+        String initFilter = searchBox.getText().trim();
+        filterDishesOfType(initFilter);
+    }
+
+    /**
+     * Returns the set of dishes of specific type, that contain filter in their name
+     * or name of any ingredient.
+     */
+    public void filterDishesOfType(String filter) {
+
+        // Get the set of dishes.
+        Set<Dish> result = new HashSet<Dish>();
+        for (Dish d : dishes) {
+            if (d.contains(filter))
+                result.add(d);
+        }
+
+        // Show the result of the filter.
+        showDishes(result);
+    }
+
+    private void showDishes(Collection<Dish> dishes) {
+        assert dishes != null : "Dishes cannot be null";
+        dishFlowPane.getChildren().clear();
+
+        // For every dish to show.
+        for (final Dish dish : dishes) {
+            if (dish == null) continue;
+
+            // Create a view for every dish.
             DishPortfolioView view = new DishPortfolioView(dish);
             dishFlowPane.getChildren().add(view);
+
             //we are enabling the drag and drop event.
             // Every dish portfolio view will be treated as a source for a drag and drop event
             view.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -83,12 +129,12 @@ public class SearchController {
                 }
             });
 
+            // Make sure we handle the double click appropiately.
             view.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     // On a double click of the primary mouse button open up a dish specific page.
                     if(mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2){
-                        // TODO Open up DishView about this particular dish.
                         Stage stage = new Stage();
                         stage.setTitle("Dinner Planner - " + dish.getName());
                         stage.setScene(new Scene(new DishView(DinnerModel.getInstance(),

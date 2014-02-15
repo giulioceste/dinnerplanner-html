@@ -1,7 +1,5 @@
 package se.kth.csc.iprog.dinnerplanner.model;
 
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.binding.DoubleExpression;
 import javafx.beans.property.*;
 
 /**
@@ -10,10 +8,7 @@ import javafx.beans.property.*;
 public class Ingredient {
 
     private final StringProperty name, unit;
-    private DoubleProperty quantity;
-    private final DoubleProperty pricePerUnit;
-    private final DoubleBinding price;
-
+    private final DoubleProperty quantity, pricePerUnit, price;
 
     /**
      * Creates Ingredient class.
@@ -28,7 +23,8 @@ public class Ingredient {
         this.quantity = new SimpleDoubleProperty(quantity);
         this.unit = new SimpleStringProperty(unit);
         this.pricePerUnit = new SimpleDoubleProperty(pricePerUnit);
-        price = this.quantity.multiply(this.pricePerUnit);
+        this.price = new SimpleDoubleProperty();
+        this.price.bind(this.quantity.multiply(this.pricePerUnit));
     }
 
     // Access to Property values observable binding.
@@ -43,7 +39,7 @@ public class Ingredient {
     /**
      * @return The Quantity Property.
      */
-    public ReadOnlyDoubleProperty quantityProperty() {
+    public DoubleProperty quantityProperty() {
         return quantity;
     }
 
@@ -64,7 +60,7 @@ public class Ingredient {
     /**
      * @return The total price calculated from the quantity.
      */
-    public DoubleExpression priceProperty() {
+    public ReadOnlyDoubleProperty priceProperty() {
         return price;
     }
 
@@ -75,6 +71,7 @@ public class Ingredient {
      * @param quantity Quantity of the ingredient.
      */
     public void setQuantity(double quantity) {
+        if (quantity <= 0) return;
         this.quantity.set(quantity);
     }
 

@@ -1,5 +1,9 @@
 package se.kth.csc.iprog.dinnerplanner.view;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,6 +17,9 @@ import se.kth.csc.iprog.dinnerplanner.model.Dish;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -83,13 +90,36 @@ public class AddedDishItemView extends HBox {
             default:
                 label += DESSERT;
         }
-        label += ": " + dish.getName();
-        dishLabel.setText(label);
-        costAddedDishLabel.setText("$3.02");
+        label += ": ";
+        StringProperty labelProp = new SimpleStringProperty(label);
+
+        // Bind the label to the name of the dish
+        dishLabel.textProperty().bind(labelProp.concat(dish.nameProperty()));
+
+        updatePrice();
+
+        dish.priceProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(
+                    ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
+                updatePrice();
+            }
+        });
     }
 
     @FXML
     void onRemoveDish(ActionEvent event) {
         model.removeFromMenu(dish);
+    }
+
+    /**
+     * Updates the price to show.
+     */
+    private void updatePrice() {
+        Locale locale = Locale.getDefault();
+        Currency currentCurrency = Currency.getInstance(locale);
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        String costStr = currencyFormatter.format(dish.getPrice()) + " " + currentCurrency.getDisplayName();
+        costAddedDishLabel.setText(costStr);
     }
 }

@@ -74,6 +74,12 @@ public class FullMenuController {
 
     private void setupUI() {
 
+        // Intialize everything to false.
+        setupLabelAndTextAreas();
+        for (TextArea area: areas.values()) {
+            area.setVisible(false);
+        }
+
         // initially set up the with the dished currently in the menu.
         for (Dish dish: model.getFullMenu()) {
             if (dish == null) continue;
@@ -100,23 +106,33 @@ public class FullMenuController {
 
     private void addDish(Dish dish) {
         assert dish != null;
-        setUpText(labels.get(dish.getType()), areas.get(dish.getType()), dish);
+        setText(labels.get(dish.getType()), areas.get(dish.getType()), dish);
+        areas.get(dish.getType()).setVisible(true);
     }
 
     private void hideTextByType(int type) {
         areas.get(type).setVisible(false);
     }
 
-    private static void setUpText(Label label, TextArea area, Dish d) {
+    private void setupLabelAndTextAreas() {
+        int[] dishTypes = {Dish.STARTER, Dish.MAIN, Dish.DESSERT};
+        for (int i: dishTypes) {
+            Label label = labels.get(i);
+            TextArea area = areas.get(i);
+            // If any view becomes invisible then exclude it from the layout.
+            label.managedProperty().bind(label.visibleProperty());
+            area.managedProperty().bind(area.visibleProperty());
+
+            // Area visibility implies label visibility.
+            label.visibleProperty().bindBidirectional(area.visibleProperty());
+
+        }
+    }
+
+    private static void setText(Label label, TextArea area, Dish d) {
         // Shouldnt have null fields
         assert label != null && area != null && d != null;
 
-        // If any view becomes invisible then exclude it from the layout.
-        label.managedProperty().bind(label.visibleProperty());
-        area.managedProperty().bind(area.visibleProperty());
-
-        // Area visibility implies label visibility.
-        label.visibleProperty().bindBidirectional(area.visibleProperty());
 
         // Bind the actual text to the dish element.
         label.textProperty().bind(d.nameProperty());
