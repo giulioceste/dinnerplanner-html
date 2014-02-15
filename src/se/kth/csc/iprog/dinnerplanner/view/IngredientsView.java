@@ -1,6 +1,5 @@
 package se.kth.csc.iprog.dinnerplanner.view;
 
-import se.kth.csc.iprog.dinnerplanner.model.IngredientTableEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,7 +13,7 @@ import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -23,7 +22,9 @@ import java.util.Set;
 public class IngredientsView extends Pane {
 
     private final DinnerModel model;
-    private final Set<Dish> dishes;
+
+    @FXML
+    private Pane paneContainer;
 
     @FXML
     private TableView tableIngredients;
@@ -32,11 +33,19 @@ public class IngredientsView extends Pane {
     private TableColumn columnIngredients;
 
     @FXML
+    private TableColumn columnUnit;
+
+    @FXML
     private TableColumn columnQuantity;
 
     @FXML
-    private TableColumn columnCosts;
+    private TableColumn columnPricePerUnit;
 
+    @FXML
+    private TableColumn columnPrice;
+
+
+    // TODO: remove 2nd argument (it's not necessary)
     public IngredientsView(DinnerModel model, Set<Dish> dishes) {
 
         try {
@@ -46,28 +55,66 @@ public class IngredientsView extends Pane {
         }
 
         this.model = model;
-        this.dishes = dishes;
 
-        Set<Ingredient> allIngredients = new HashSet<Ingredient>();
-        for (Dish dish : dishes) {
-            allIngredients.addAll(dish.getIngredients());
-        }
+        initUI();
 
-        displayData(allIngredients);
+        displayData(model.getFullMenu());
 
     }
 
-    public void displayData(Set<Ingredient> ingrs) {
 
-        ObservableList<IngredientTableEntry> ingredients = FXCollections.observableArrayList();
-        for (Ingredient ingr : ingrs) {
-            ingredients.add(new IngredientTableEntry(ingr));
+    private void initUI() {
+
+        // resize table & columns when the pane is expanded
+        tableIngredients.prefWidthProperty().bind(paneContainer.widthProperty());
+        tableIngredients.prefHeightProperty().bind(paneContainer.heightProperty());
+
+        columnIngredients.prefWidthProperty().bind(tableIngredients.widthProperty().multiply(0.6));
+        columnUnit.prefWidthProperty().bind(tableIngredients.widthProperty().multiply(0.1));
+        columnQuantity.prefWidthProperty().bind(tableIngredients.widthProperty().multiply(0.1));
+        columnPricePerUnit.prefWidthProperty().bind(tableIngredients.widthProperty().multiply(0.1));
+        columnPrice.prefWidthProperty().bind(tableIngredients.widthProperty().multiply(0.1));
+
+        // column content
+        columnIngredients.setCellValueFactory(new PropertyValueFactory<Ingredient, String>("name"));
+        columnUnit.setCellValueFactory(new PropertyValueFactory<Ingredient, Double>("unit"));
+        columnQuantity.setCellValueFactory(new PropertyValueFactory<Ingredient, Double>("quantity"));
+        columnPricePerUnit.setCellValueFactory(new PropertyValueFactory<Ingredient, Double>("pricePerUnit"));
+//        columnPrice.setCellValueFactory(new PropertyValueFactory<Ingredient, Double>("price"));
+
+    }
+
+    /**
+     * Display the ingredients of the given dishes.
+     * @param dishes
+     */
+    private void displayData(Set<Dish> dishes) {
+
+        // merge ingredients
+        HashMap<String, Ingredient> allIngredients = new HashMap<String, Ingredient>();
+        for (Dish dish : dishes) {
+            for (Ingredient ingredient : dish.getIngredients()) {
+                if (allIngredients.containsKey(ingredient.getName())) {
+                    Ingredient mapIngredient = allIngredients.get(ingredient.getName());
+                    mapIngredient.setQuantity(mapIngredient.getQuantity() + ingredient.getQuantity());
+                } else {
+                    // we have to create a new ingredient object, otherwise the ingredient object
+                    // in the model gets changed every time we merge another ingredient object of
+                    // the same type to it
+                    Ingredient newIngredient = new Ingredient(ingredient.getName(),
+                            ingredient.getQuantity(), ingredient.getUnit(), ingredient.getPrice());
+                    allIngredients.put(newIngredient.getName(), newIngredient);
+                }
+            }
         }
-        tableIngredients.setItems(ingredients);
 
-        columnIngredients.setCellValueFactory(new PropertyValueFactory<IngredientTableEntry, String>("name"));
-        columnQuantity.setCellValueFactory(new PropertyValueFactory<IngredientTableEntry, Double>("quantity"));
-        columnCosts.setCellValueFactory(new PropertyValueFactory<IngredientTableEntry, Double>("price"));
+        ObservableList<Ingredient> ingredients = FXCollections.observableArrayList();
+        for (String ingredientName : allIngredients.keySet()) {
+            Ingredient ingr = allIngredients.get(ingredientName);
+            ingredients.add(ingr);
+        }
+
+        tableIngredients.setItems(ingredients);
 
     }
 
@@ -76,8 +123,10 @@ public class IngredientsView extends Pane {
 
         assert tableIngredients != null : "fx:id=\"tableIngredients\" was not injected: check your FXML file 'IngredientsView.fxml'.";
         assert columnIngredients != null : "fx:id=\"columnIngredients\" was not injected: check your FXML file 'IngredientsView.fxml'.";
+        assert columnUnit != null : "fx:id=\"columnUnit\" was not injected: check your FXML file 'IngredientsView.fxml'.";
         assert columnQuantity != null : "fx:id=\"columnQuantity\" was not injected: check your FXML file 'IngredientsView.fxml'.";
-        assert columnCosts != null : "fx:id=\"columnCosts\" was not injected: check your FXML file 'IngredientsView.fxml'.";
+        assert columnPricePerUnit != null : "fx:id=\"columnPricePerUnit\" was not injected: check your FXML file 'IngredientsView.fxml'.";
+        assert columnPrice != null : "fx:id=\"columnPrice\" was not injected: check your FXML file 'IngredientsView.fxml'.";
 
     }
 
