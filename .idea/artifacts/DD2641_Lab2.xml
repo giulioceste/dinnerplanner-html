@@ -3,12 +3,14 @@
     <output-path>$PROJECT_DIR$/out/artifacts/DD2641_Lab2</output-path>
     <properties id="javafx-properties">
       <options>
-        <option name="appClass" value="DinnerPlanner.Main" />
+        <option name="appClass" value="se.kth.csc.iprog.dinnerplanner.Main" />
         <option name="description" value="" />
+        <option name="height" value="600" />
         <option name="htmlParamFile" value="" />
         <option name="paramFile" value="" />
         <option name="title" value="Dinner Planner" />
         <option name="vendor" value="Group 26" />
+        <option name="width" value="800" />
       </options>
     </properties>
     <root id="root">
