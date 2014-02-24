@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dinner Planner</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div id="dishview">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column">
+                <h4 class="dish name">Title of the dish</h4>
+                <img class="dish image" data-src="holder.js/300x200" alt="Dish Image">
+                <p class="dish details">Details about the dish</p>
+                <button id="back-button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                    Back to Select Dishes
+                </button>
+            </div>
+            <div id="ingredients-pane" class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column">
+                <h5>INGREDIENTS FOR <span class="menu numPeople"></span> PEOPLE</h5>
+                <hr>
+                <table id="ingredients-table">
+
+                </table>
+                <button id="confirm-dish-button" class="btn btn-default">Confirm Dish
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <h4>Preparation</h4>
+                <p class="dish preparation">Preparation of the dish goes here.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- Bootstrap JavaScript, needed if you want for instance tabs, models, popovers etc. -->
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+<!-- The application JavaScript code -->
+<script src="js/model/dinnerModel.js"></script>
+
+</body>
+</html>

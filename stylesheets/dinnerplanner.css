@@ -1,0 +1,94 @@
+/* Header View */
+#header-pane {
+    background-color: rgba(255, 163, 25, 0.50);
+    padding: 10px 10px 10px 10px;
+}
+.header-title {
+    font-weight: bold;
+    font-size: 28pt;
+}
+.header-subtitle {
+    padding-left: 10px;
+    font-size: 14pt;
+    font-style: italic;
+}
+
+/* Go Back Title View */
+#summary-header-pane {
+    padding: 5px 0px 5px 0px;
+    background-color: #FFEA6F;
+}
+#dinner-summary {
+    font-size: 18pt;
+    padding-left: 50px;
+}
+#goBackButton {
+    background-color: #FFA319;
+}
+
+/* Dishes Overview */
+#dinnerOverview {
+    padding-top: 50px;
+}
+.dish {
+    border: 1px solid black;
+    width: 144px;
+}
+.dish > img {
+    padding: 1px;
+    border-bottom: 1px solid black;
+    /* the image is currently just stretched to 142x142 */
+    min-width: 142px;
+    min-height: 142px;
+    max-width: 142px;
+    max-height: 142px;
+}
+.dish > span {
+    font-weight: bold;
+}
+
+#buttonContainer {
+    border-top: 1pt solid black;
+    margin-top: 20px;
+}
+#printButton {
+    background-color: #FFA319;
+    margin-top: 20px;
+    padding: 7px 30px 7px 30px;
+}
+
+#intro-pane {
+    margin-top: 200px;
+    background-color: white;
+}
+
+.container {
+    background-image: url('../images/healthy-cooking-for-the-family.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#current-menu-pane > .row {
+    margin-top: 10px;
+
+}
+
+#current-menu-pane #table-header {
+    font-weight: bold;
+    background-color: #b9bab8;
+    text-align: center;
+    text-justify: auto;
+}
+
+#menu-options-view h4 {
+    margin-top: 20px;
+}
+
+button {
+    background-color: #FFA319;
+}
+
+table {
+    width: 100%;
+}
+
