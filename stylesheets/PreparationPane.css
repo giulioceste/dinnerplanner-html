@@ -1,0 +1,29 @@
+.imagebox {
+position:relative;
+width:100%;
+margin:10px 10px 20px;
+border-radius: 4px 4px 4px 4px;
+overflow: hidden;
+}
+
+.quantity {text-align:left; width:20%;}
+.name_ingredient{text-align:left; width:55%;}
+.price{text-align:right;width:25%;}
+th.title{text-align:center;text-transform:uppercase;margin-bottom:5px;}
+td.foot{text-align:right; width:55%;text-transform:uppercase;}
+
+.section-title {
+border-bottom: 2px solid #ddd;
+margin:12px 10px;
+padding-bottom: 6px;
+}
+
+.div-border {
+display:inline-block;
+padding:5px 15px 0px;
+background-color: #fff;
+border: 1px solid #ddd;
+border-radius: 4px 4px 4px 4px;
+margin:10px;
+box-shadow: none;
+}
