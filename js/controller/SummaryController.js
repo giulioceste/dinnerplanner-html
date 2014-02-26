@@ -15,7 +15,7 @@ var SummaryController = function(view, model) {
 
     var notifyListeners = function() {
         for (var i = 0; i < listeners.length; i++) {
-            listeners[i].backToEditMenu();
+            listeners[i].onBackPressed();
         }
     }
 

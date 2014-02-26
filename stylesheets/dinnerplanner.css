@@ -88,6 +88,15 @@ button {
     background-color: #FFA319;
 }
 
+.btn {
+    background-color: #FFA319;
+}
+
+.btn-danger {
+    background-color: #ff2d23;
+}
+
+
 table {
     width: 100%;
 }

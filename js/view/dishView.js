@@ -4,41 +4,61 @@
 var DishView = function(container, dish, model) {
 
     // JQuery object references values
-    var dishProperties = container.find('.dish');
-    var name = dishProperties.find('.name');
-    var image = dishProperties.find('.image');
-    var details = dishProperties.find('.details');
-    var table = container.find('table');
-    var preparation = container.find('.preparation');
+    var name = container.find('#title');
+    var numPeopleSpan = container.find('#numPeople');
+    var image = container.find('img');
+    var details = container.find('#details');
+    var tableRows = container.find('tbody');
+    var preparation = container.find('#preparation');
 
-    // Back button
+    // Back to select dish button
     this.backButton = container.find('#back-button');
-    // Confirm button
+    // Confirm dish button button
     this.confirmButton = container.find('#confirm-dish-button');
 
     //Register an observer to the model
     model.addObserver(this);
 
-
- //This function gets called when there is a change at the model
+    //This function gets called when there is a change at the model
     this.update = function(arg) {
-        var numGuest = model.getNumberOfGuests();
-        document.getElementById("peopleChanging").innerHTML= numGuest;
-        // TODO update the number of guests in ingredients
 
+        // Update the number of guests
+        var numGuests = model.getNumberOfGuests();
+        numPeopleSpan.text(numGuests);
+
+        // Update the title of the dish.
+        name.text(dish.name);
+
+        // Update the image of the dish
+        image.attr('src', 'images/' + dish.image);
+
+        tableRows.empty();
+        // Update the ingredients with quantity and and cost based off the number of people
         $.each(dish.ingredients, function(index, ingredient) {
             var row = $('<tr>');
 
-            var cell = $('<td>');
-            cell.addClass('')
+            var qtyCell = $('<td>');
+            qtyCell.addClass('qty');
+            qtyCell.text((ingredient.quantity * numGuests) + ingredient.unit);
+            qtyCell.appendTo(row);
 
+            var nameCell = $('<td>');
+            nameCell.addClass('name');
+            nameCell.text(ingredient.name);
+            nameCell.appendTo(row);
+
+            var costCell = $('<td>');
+            costCell.addClass('cost');
+            costCell.text(ingredient.price * numGuests);
+            costCell.appendTo(row);
+
+            row.appendTo(tableRows);
         });
 
+        // Update the preparations block.
+        preparation.text(dish.description);
     }
 
-    // Set the immutable fields.
-    name.html(dish.name);
-    image.data('src', 'images/' + dish.image);
-    details.html(dish.type);
-    preparation.html(dish.description);
+    // Update the view
+    this.update(dish);
 }

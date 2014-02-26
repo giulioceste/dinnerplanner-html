@@ -20,12 +20,20 @@ $(function() {
     var menuOptionsController = new MenuOptionsController(menuOptionsView, model);
     menuOptionsController.addListener(this);
 
-    var goBackTitleView = new GoBackTitleView($("#summary-header-pane"), model);
-    var goBackTitleViewController = new SummaryController(goBackTitleView, model);
+    var SummaryTitleView = new SummaryView($("#summary-header-pane"), model);
+    var SummaryTitleController = new SummaryController(SummaryTitleView, model);
+    SummaryTitleController.addListener(this);
 
+    var currentMenuView = new CurrentMenuView($("#current-menu-pane"), model);
+    var currentMenuController = new CurrentMenuViewController(currentMenuView, model);
+    currentMenuController.addListener(this);
 
-//    var dinnerOverview = new DinnerOverviewView($("#dinnerOverview"), model);
-//    var dinnerOverviewController = new DinnerOverviewViewController(dinnerOverview, model);
+    var dinnerOverView = new DinnerOverviewView($('#dinnerOverview'), model);
+    var dinnerController = new DinnerOverviewController(dinnerOverView, model);
+    dinnerController.addListener(this);
+
+    var dishView;
+    var dishController;
 
     // groups of views.
     var headerGroup = ['#summary-header-pane'];
@@ -72,6 +80,10 @@ $(function() {
     this.dishSelected = function(dish) {
         // Show the view for a specific dish.
         console.log('Dish selected for ' + dish.name);
+        showFromRightGroup('#dish-pane');
+        dishView = new DishView($('#dish-pane'), dish, model);
+        dishController = new DishController(dishView, dish, model);
+        dishController.addListener(this);
     }
 
     // Summary View Controller
@@ -91,7 +103,23 @@ $(function() {
         proceedAfterIntro();
     }
 
+    this.onBackPressed = function() {
+        showFromMainGroup('#split-pane');
+        showFromHeaderGroup('');
+        showFromRightGroup('#menu-options-view');
+        if (dishController != null && dishController != undefined) {
+            dishController.removeListener(this);
+        }
+    }
 
+    this.dinnerConfirmed = function() {
+        showFromHeaderGroup('#summary-header-pane');
+        showFromMainGroup('#dinnerOverview');
+    }
+
+    this.printMenu = function() {
+        showFromMainGroup('#dinnerOverview');
+    }
 
    showIntro();
 });

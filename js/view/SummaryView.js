@@ -1,7 +1,7 @@
 /**
  * Created by sandstroh on 2/21/14.
  */
-var GoBackTitleView = function(container, model) {
+var SummaryView = function(container, model) {
 
     this.numberOfGuests = container.find("#numberOfGuests");
     this.goBackButton = container.find("#goBackButton");
